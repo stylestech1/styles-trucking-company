@@ -33,7 +33,7 @@ const icons = [
 
 const DriverApp = () => {
   return (
-    <section className="py-5 md:py-30">
+    <section className="py-5 md:py-15" id="driverApp">
       <div className="container mx-auto px-5 gap-5 md:my-20">
         {/* Titles */}
         <div className="flex items-center mx-auto gap-2 text-sm md:text-lg text-white bg-[#1E56A0] rounded-sm py-2 px-5 w-fit">
@@ -56,7 +56,7 @@ const DriverApp = () => {
             height={250}
             alt="bg"
             loading="lazy"
-            className="w-200 lg:w-130 xl:w-200 -mt-25"
+            className="hidden md:block w-200 lg:w-130 xl:w-200 -mt-25"
           />
           <Image
             src={"/assets/images/phone.webp"}
@@ -64,7 +64,7 @@ const DriverApp = () => {
             height={350}
             alt="bg"
             loading="lazy"
-            className="absolute w-60 md:w-100 top-15 md:top-50 left-47 md:left-100 lg:left-70 xl:left-110 -translate-1/2"
+            className="static mx-auto md:absolute w-50 md:w-100 md:top-50 md:left-100 lg:left-70 xl:left-110 md:-translate-1/2"
           />
         </div>
 

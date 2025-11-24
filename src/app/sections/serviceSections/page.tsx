@@ -32,7 +32,7 @@ const cards = [
 
 const ServiceSection = () => {
   return (
-    <div className="container mx-auto px-5 gap-5 my-15">
+    <div className="container mx-auto px-5 gap-5 py-25" id="services">
       <Titles>Our Services</Titles>
       <SubTitle>
         Comprehensive transportation and logistics solutions tailored to your

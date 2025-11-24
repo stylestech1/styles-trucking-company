@@ -9,7 +9,6 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // تأثير التمرير
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
@@ -72,6 +71,29 @@ const Header = () => {
     },
   };
 
+  const links = [
+    {
+      id: 1,
+      name: "Services",
+      href: "#services",
+    },
+    {
+      id: 2,
+      name: "About",
+      href: "#about",
+    },
+    {
+      id: 3,
+      name: "Careers",
+      href: "#careers",
+    },
+    {
+      id: 4,
+      name: "Driver App",
+      href: "#driverApp",
+    },
+  ];
+
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -87,29 +109,31 @@ const Header = () => {
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-4">
         {/* Logo */}
-        <motion.div
-          className="flex items-center gap-3"
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 400 }}
-        >
-          <Image
-            src={"/assets/images/Logo.webp"}
-            width={45}
-            height={45}
-            alt="logo"
-            loading="eager"
-            className="rounded-lg"
-          />
-          <h2 className={`text-xl font-bold transition-colors text-[#1E56A0]`}>
-            Styles Trucking
-          </h2>
-        </motion.div>
+        <Link href="/" className="flex items-center gap-3">
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400 }}
+            className="flex items-center gap-3"
+          >
+            <Image
+              src="/assets/images/Logo.webp"
+              width={45}
+              height={45}
+              alt="logo"
+              loading="eager"
+              className="rounded-lg"
+            />
+            <h2 className="text-xl font-bold text-[#1E56A0]">
+              Styles Trucking
+            </h2>
+          </motion.div>
+        </Link>
 
         {/* Links - Desktop */}
         <ul className="hidden lg:flex items-center gap-8">
-          {["Services", "About", "Careers", "Driver App"].map((item, index) => (
+          {links.map((item, index) => (
             <motion.li
-              key={item}
+              key={index}
               className="capitalize"
               whileHover={{ y: -2 }}
               whileTap={{ y: 0 }}
@@ -118,10 +142,10 @@ const Header = () => {
               transition={{ delay: index * 0.1, duration: 0.2 }}
             >
               <Link
-                href={"/"}
+                href={item.href}
                 className={`font-medium text-gray-700 hover:text-[#1E56A0] transition-colors`}
               >
-                {item}
+                {item.name}
               </Link>
             </motion.li>
           ))}
@@ -176,7 +200,7 @@ const Header = () => {
               >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                  <div className="flex items-center gap-3">
+                  <Link href="/" onClick={() => setOpenMenu(false)} className="flex items-center gap-3">
                     <Image
                       src={"/assets/images/Logo.webp"}
                       width={40}
@@ -187,7 +211,7 @@ const Header = () => {
                     <h2 className="text-lg font-bold text-[#1E56A0]">
                       Styles Trucking
                     </h2>
-                  </div>
+                  </Link>
                   <motion.button
                     onClick={() => setOpenMenu(false)}
                     className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
@@ -205,25 +229,23 @@ const Header = () => {
                   initial="closed"
                   animate="open"
                 >
-                  {["Services", "About", "Careers", "Driver App"].map(
-                    (item, index, arr) => (
-                      <motion.li
-                        key={item}
-                        variants={itemVariants}
-                        className={`border-b border-gray-300 pb-4 text-center ${
-                          index === arr.length - 1 ? "border-b-0" : ""
-                        }`}
+                  {links.map((item, index, arr) => (
+                    <motion.li
+                      key={index}
+                      variants={itemVariants}
+                      className={`border-b border-gray-300 pb-4 text-center ${
+                        index === arr.length - 1 ? "border-b-0" : ""
+                      }`}
+                    >
+                      <Link
+                        href={item.href}
+                        className="text-lg font-medium text-gray-800 hover:text-[#1E56A0] transition-colors block py-2"
+                        onClick={() => setOpenMenu(false)}
                       >
-                        <Link
-                          href={"/"}
-                          className="text-lg font-medium text-gray-800 hover:text-[#1E56A0] transition-colors block py-2"
-                          onClick={() => setOpenMenu(false)}
-                        >
-                          {item}
-                        </Link>
-                      </motion.li>
-                    )
-                  )}
+                        {item.name}
+                      </Link>
+                    </motion.li>
+                  ))}
 
                   <motion.li className="pt-4" variants={itemVariants}>
                     <Link

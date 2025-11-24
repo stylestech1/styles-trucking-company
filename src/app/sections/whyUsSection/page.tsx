@@ -57,7 +57,7 @@ const WhyUsSection = () => {
   ];
 
   return (
-    <section className="bg-[#F8FAFC] py-5">
+    <section className="bg-[#F8FAFC] py-15" id="about">
       <div className="container mx-auto px-5 gap-5 my-15">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Images */}

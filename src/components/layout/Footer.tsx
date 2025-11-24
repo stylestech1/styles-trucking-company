@@ -2,6 +2,25 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
+// "About Us", "Driver App", "Contact"
+const links = [
+  {
+    id: 1,
+    name: "About Us",
+    href: "#about",
+  },
+  {
+    id: 2,
+    name: "Driver App",
+    href: "#driverApp",
+  },
+  {
+    id: 3,
+    name: "Contact",
+    href: "#contact",
+  },
+];
+
 const Footer = () => {
   return (
     <footer className="bg-[#0F172A] text-white">
@@ -17,7 +36,7 @@ const Footer = () => {
             profile. Fast, reliable, synced across all devices, and 100% secure.
           </p>
 
-          <Link
+          <Link 
             href="#"
             className="inline-flex items-center gap-3 bg-white text-[#1E56A0] font-semibold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
           >
@@ -59,7 +78,7 @@ const Footer = () => {
                 "Full Truckload",
               ].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link  href="#" className="hover:text-white transition-colors">
                     {item}
                   </Link>
                 </li>
@@ -71,10 +90,13 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-lg mb-6">Company</h4>
             <ul className="space-y-4 text-gray-400">
-              {["About Us", "Driver App", "Contact"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    {item}
+              {links.map((item) => (
+                <li key={item.id}>
+                  <Link 
+                    href={item.href}
+                    className="hover:text-white transition-colors"
+                  >
+                    {item.name}
                   </Link>
                 </li>
               ))}
@@ -86,7 +108,7 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-6">Legal</h4>
             <ul className="space-y-4 text-gray-400">
               <li>
-                <Link href="#" className="hover:text-white transition-colors">
+                <Link  href="#" className="hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>

@@ -22,7 +22,7 @@ const checks = [
 
 const CareerSection = () => {
   return (
-    <section className="container mx-auto px-5 gap-5 my-15">
+    <section className="container mx-auto px-5 gap-5 my-15 py-25" id="careers">
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Info */}
         <div className="flex flex-col gap-5">
