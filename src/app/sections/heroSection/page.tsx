@@ -8,7 +8,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-5 flex flex-col lg:flex-row justify-between items-start gap-5 2xl:gap-50">
         {/* Text-Info */}
         <div className="flex flex-col items-center lg:items-start lg:gap-5 mx-auto text-center lg:text-left">
-          <div className="flex items-center gap-2 text-sm md:text-lg text-white bg-[#1E56A0] rounded-sm py-2 px-5 w-fit">
+          <div className="hidden md:flex items-center gap-2 text-sm md:text-lg text-white bg-[#1E56A0] rounded-sm py-2 px-5 w-fit">
             <span>
               <Truck size={18} />
             </span>
