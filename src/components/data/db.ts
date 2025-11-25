@@ -156,3 +156,22 @@ export const about: AboutFeature[] = [
     desc: "Comprehensive coverage across all 50 states with reliable service.",
   },
 ];
+
+// Footer
+export const footer = [
+  {
+    id: 1,
+    name: "About Us",
+    href: "#about",
+  },
+  {
+    id: 2,
+    name: "Driver App",
+    href: "#driverApp",
+  },
+  {
+    id: 3,
+    name: "Contact",
+    href: "#contact",
+  },
+];

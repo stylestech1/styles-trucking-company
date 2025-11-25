@@ -1,53 +1,43 @@
+"use client";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-
-// "About Us", "Driver App", "Contact"
-const links = [
-  {
-    id: 1,
-    name: "About Us",
-    href: "#about",
-  },
-  {
-    id: 2,
-    name: "Driver App",
-    href: "#driverApp",
-  },
-  {
-    id: 3,
-    name: "Contact",
-    href: "#contact",
-  },
-];
+import { footer } from "../data/db";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
   return (
     <footer className="bg-[#0F172A] text-white relative">
       {/* Top CTA Section */}
-      <div className="bg-[#1E56A0] px-6 py-16 rounded-3xl hidden lg:block w-225 xl:w-300 absolute top-10 left-1/2 -translate-1/2">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl md:text-4xl mb-6">
-            Built Exclusively for Styles Trucking Drivers
-          </h2>
-          <p className="text-blue-100 text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
-            Stay updated with real-time load tracking, manage deliveries,
-            navigate routes with maps, check your paycheck, and update your
-            profile. Fast, reliable, synced across all devices, and 100% secure.
-          </p>
+      {pathname !== "/policy" && (
+        <div className="bg-[#1E56A0] px-6 py-16 rounded-3xl hidden lg:block w-225 xl:w-300 absolute top-10 left-1/2 -translate-1/2">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl md:text-4xl mb-6">
+              Built Exclusively for Styles Trucking Drivers
+            </h2>
+            <p className="text-blue-100 text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
+              Stay updated with real-time load tracking, manage deliveries,
+              navigate routes with maps, check your paycheck, and update your
+              profile. Fast, reliable, synced across all devices, and 100%
+              secure.
+            </p>
 
-          <Link
-            href="#"
-            className="inline-flex items-center gap-3 bg-white text-[#1E56A0] font-semibold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
-          >
-            Download Driver App
-            <ArrowRight size={20} />
-          </Link>
+            <Link
+              href="#"
+              className="inline-flex items-center gap-3 bg-white text-[#1E56A0] font-semibold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+            >
+              Download Driver App
+              <ArrowRight size={20} />
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main Footer */}
-      <div className="container mx-auto px-6 pt-10 lg:pt-70 pb-10">
+      <div
+        className={`container mx-auto px-6 pb-10 ${pathname !== "/policy" ? " pt-10 lg:pt-70 " : "pt-10"}`}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="space-y-6">
@@ -88,7 +78,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-lg mb-6">Company</h4>
             <ul className="space-y-4 text-gray-400">
-              {links.map((item) => (
+              {footer.map((item) => (
                 <li key={item.id}>
                   <Link
                     href={item.href}
@@ -106,7 +96,10 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-6">Legal</h4>
             <ul className="space-y-4 text-gray-400">
               <li>
-                <Link href="/policy" className="hover:text-white transition-colors">
+                <Link
+                  href="/policy"
+                  className="hover:text-white transition-colors"
+                >
                   Privacy Policy
                 </Link>
               </li>
