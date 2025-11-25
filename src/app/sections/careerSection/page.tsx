@@ -1,24 +1,7 @@
-import { Check, Users } from "lucide-react";
+import { careers } from "@/components/data/db";
+import { ArrowRight, Check, Users } from "lucide-react";
 import Image from "next/image";
-
-// checks
-const checks = [
-  {
-    id: 1,
-    name: "Competitive Pay & Benefits",
-    desc: "Industry-leading compensation with comprehensive health and retirement benefits.",
-  },
-  {
-    id: 2,
-    name: "Flexible Schedules",
-    desc: "Flexible schedules and routes designed to get you home when it matters.",
-  },
-  {
-    id: 3,
-    name: "Comprehensive benefits",
-    desc: "Drive the latest trucks equipped with advanced safety and comfort features.",
-  },
-];
+import Link from "next/link";
 
 const CareerSection = () => {
   return (
@@ -40,7 +23,7 @@ const CareerSection = () => {
             </p>
           </div>
 
-          {checks.map((chk, i) => (
+          {careers.map((chk, i) => (
             <div key={i} className="flex items-start gap-3">
               <span className="rounded-full p-1 mt-1 bg-[#1E56A0] text-white">
                 <Check size={16} />
@@ -51,6 +34,16 @@ const CareerSection = () => {
               </div>
             </div>
           ))}
+
+          <Link
+            href={""}
+            className={`flex items-center justify-center gap-2 py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[#1E56A0] text-white shadow-lg md:w-fit`}
+          >
+            <span>Apply Now</span>
+            <span>
+              <ArrowRight size={18} />
+            </span>
+          </Link>
         </div>
 
         {/* Image */}
@@ -60,7 +53,7 @@ const CareerSection = () => {
           height={1000}
           alt="careers"
           loading="lazy"
-          className="rounded-xl"
+          className="rounded-xl mt-5 md:mt-0"
         />
       </div>
     </section>

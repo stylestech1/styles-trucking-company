@@ -116,14 +116,14 @@ const Header = () => {
             className="flex items-center gap-3"
           >
             <Image
-              src="/assets/images/Logo.webp"
+              src="/assets/images/Logo.svg"
               width={45}
               height={45}
               alt="logo"
               loading="eager"
               className="rounded-lg"
             />
-            <h2 className="text-xl font-bold text-[#1E56A0]">
+            <h2 className="text-xl text-[#1E56A0]">
               Styles Trucking
             </h2>
           </motion.div>
@@ -157,7 +157,7 @@ const Header = () => {
             transition={{ delay: 0.3, duration: 0.2 }}
           >
             <Link
-              href={""}
+              href={"tel:+4794803064"}
               className={`py-2.5 px-6 rounded-lg font-medium transition-all bg-[#1E56A0] text-white shadow-lg ${
                 isScrolled ? "shadow-blue-500/25" : "shadow-white/20"
               }`}
@@ -170,7 +170,7 @@ const Header = () => {
         {/* Hamburger Button */}
         <motion.button
           onClick={() => setOpenMenu(!openMenu)}
-          className={`flex lg:hidden p-3 rounded-lg transition-colors bg-[#1E56A0] text-white`}
+          className={`flex lg:hidden p-3 rounded-lg transition-colors text-[#1E56A0]`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -202,7 +202,7 @@ const Header = () => {
                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
                   <Link href="/" onClick={() => setOpenMenu(false)} className="flex items-center gap-3">
                     <Image
-                      src={"/assets/images/Logo.webp"}
+                      src={"/assets/images/Logo.svg"}
                       width={40}
                       height={40}
                       alt="logo"
@@ -249,7 +249,7 @@ const Header = () => {
 
                   <motion.li className="pt-4" variants={itemVariants}>
                     <Link
-                      href={""}
+                      href={"tel:+4794803064"}
                       className="w-full py-3 px-6 bg-[#1E56A0] text-white rounded-lg font-medium transition-colors block text-center shadow-lg shadow-blue-500/25"
                       onClick={() => setOpenMenu(false)}
                     >
