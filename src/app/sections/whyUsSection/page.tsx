@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const WhyUsSection = () => {
   return (
-    <section className="bg-[#F8FAFC] py-15" id="about">
-      <div className="container mx-auto px-5 gap-5 my-15">
+    <section className="bg-[#F8FAFC] py-10" id="about">
+      <div className="container mx-auto px-5 gap-5">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Images */}
           <div className="grid grid-cols-2 gap-2 md:gap-5">

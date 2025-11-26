@@ -4,14 +4,14 @@ import Titles from "@/components/ui/Titles";
 
 const ServiceSection = () => {
   return (
-    <div className="container mx-auto px-5 gap-5 py-25" id="services">
+    <section className="container mx-auto px-5 gap-5 " id="services">
       <Titles>Our Services</Titles>
       <SubTitle>
         Comprehensive transportation and logistics solutions tailored to your
         business needs.
       </SubTitle>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-10">
         {services.map((card, i) => {
           const Icon = card.icon;
           return (
@@ -28,7 +28,7 @@ const ServiceSection = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };
 
