@@ -8,15 +8,15 @@ const data = [
     id: 1,
     title: "Pay",
     data: [
-      "Our current drivers are making between 1800$ to 2200$ a week depends on driver performance and experience.",
+      "0.70 CPM for reefer work",
       "Weekly pay Direct Deposit",
       "1099 or w-2",
       "Safety bonus for clean inspections $100",
-      "Minimum 6 month experience required",
+      "Minimum 2 years experience required",
       "$2000 annual bonus for professional drivers",
       "$100 Layovers",
       "$25 extra stop",
-      "Minimum 2900 miles a week",
+      "Minimum 2400 miles a week",
     ],
   },
   {
@@ -57,6 +57,7 @@ const data = [
       "Georgia",
       "South Carolina",
       "North Carolina",
+      "We run between AR, OK, MO, KS, IL, OH, PA, MD, VA, NC, SC, GA, TN, MS, KY, AL, LA, PA and TX.",
     ],
   },
   {
@@ -64,7 +65,7 @@ const data = [
     title: "Owner Operators",
     data: [
       "Our owner operators make between $6,000 to $9,000 a week.",
-      "we charge 20% all expenses included0",
+      "we charge 20% all expenses included",
       "Weekly direct deposit",
       "Company fuel card (you get the discount)",
       "tire discount within our network",
@@ -91,9 +92,7 @@ const CareerSection = () => {
             <ul key={i} className="space-y-3">
               <p className="text-2xl font-medium">{data.title}</p>
               {data.subtitle ? (
-                <p className="text-lg text-gray-600">
-                  {`"${data.subtitle}"`}
-                </p>
+                <p className="text-lg text-gray-600">{`"${data.subtitle}"`}</p>
               ) : (
                 ""
               )}
