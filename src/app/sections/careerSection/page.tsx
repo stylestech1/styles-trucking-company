@@ -12,7 +12,7 @@ const CareerSection = () => {
           <span>Come Join Our Family</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 lg:gap-30 my-5">
           {careers.map((data, i) => (
             <ul key={i} className="space-y-3">
               <p className="text-2xl font-medium">{data.title}</p>
