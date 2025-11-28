@@ -1,8 +1,10 @@
+'use client'
 import { services } from "@/components/data/db";
 import SubTitle from "@/components/ui/SubTitle";
 import Titles from "@/components/ui/Titles";
 
 const ServiceSection = () => {
+
   return (
     <section className="container mx-auto px-5 gap-5 " id="services">
       <Titles>Our Services</Titles>
@@ -17,13 +19,13 @@ const ServiceSection = () => {
           return (
             <div
               key={i}
-              className="flex flex-col justify-center items-center text-center p-10 gap-5 border border-[#E5E7EB] rounded-xl"
+              className="flex flex-col justify-center items-center text-center p-10 gap-5 border border-[hsl(var(--text))] rounded-xl"
             >
-              <span className="bg-[#1E56A0] text-white rounded-xl p-4">
+              <span className="bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] rounded-xl p-4">
                 <Icon size={25} />
               </span>
               <p>{card.name}</p>
-              <p className="text-sm text-gray-600">{card.desc}</p>
+              <p className="text-sm text-[hsl(var(--text))]">{card.desc}</p>
             </div>
           );
         })}

@@ -1,14 +1,19 @@
+'use client'
 import { Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+// Importing Language Provider
+import { useTheme } from "@/context/theme/ThemeProvider";
 
 const HeroSection = () => {
+    const { theme } = useTheme();
+  
   return (
-    <section className="bg-[#F8FAFC] py-25 lg:py-50">
+    <section className={`${theme === 'dark' ? 'bg-[#121d3e]' : 'bg-[#F8FAFC]'} py-25 lg:py-50`}>
       <div className="container mx-auto px-5 flex flex-col lg:flex-row justify-between items-start gap-5 2xl:gap-50">
         {/* Text-Info */}
         <div className="flex flex-col items-center lg:items-start lg:gap-5 mx-auto text-center lg:text-left">
-          <div className="hidden md:flex items-center gap-2 text-sm md:text-lg text-white bg-[#1E56A0] rounded-sm py-2 px-5 w-fit">
+          <div className="hidden md:flex items-center gap-2 text-sm md:text-lg text-[hsl(var(--secondary))] bg-[hsl(var(--primary))] rounded-sm py-2 px-5 w-fit">
             <span>
               <Truck size={18} />
             </span>
@@ -18,18 +23,18 @@ const HeroSection = () => {
           {/* text */}
           <div className="my-10 lg:my-5 flex flex-col items-center lg:items-start w-full gap-5">
             <h1 className="text-3xl">
-              Your <span className="text-[#1E56A0] font-medium">Trusted Partner</span> in
+              Your <span className="text-[hsl(var(--primary))] font-medium">Trusted Partner</span> in
               Freight Transportation
             </h1>
 
-            <p className="text-gray-600">
+            <p className="text-[hsl(var(--text))]">
               Styles Trucking delivers reliability and excellence across
               America. With our drivers, We ensure safe, timely delivery
             </p>
 
             <Link 
               href={"tel:+4794803064"}
-              className={`py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[#1E56A0] text-white shadow-lg w-fit`}
+              className={`py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg w-fit`}
             >
               Contact Now
             </Link>
@@ -37,16 +42,16 @@ const HeroSection = () => {
 
           <div className="grid grid-cols-3 gap-5 lg:gap-10">
             <div className="flex flex-col items-center md:items-start">
-              <span className="text-[#1E56A0] text-md md:text-2xl">6+</span>
-              <p className="text-gray-600 text-sm md:text-lg">Years Experience</p>
+              <span className="text-[hsl(var(--primary))] text-md md:text-2xl">6+</span>
+              <p className="text-[hsl(var(--text))] text-sm md:text-lg">Years Experience</p>
             </div>
             <div className="flex flex-col items-center md:items-start">
-              <span className="text-[#1E56A0] text-md md:text-2xl">50+</span>
-              <p className="text-gray-600 text-sm md:text-lg">States Coverage</p>
+              <span className="text-[hsl(var(--primary))] text-md md:text-2xl">50+</span>
+              <p className="text-[hsl(var(--text))] text-sm md:text-lg">States Coverage</p>
             </div>
             <div className="flex flex-col items-center md:items-start">
-              <span className="text-[#1E56A0] text-md md:text-2xl">24/7</span>
-              <p className="text-gray-600 text-sm md:text-lg">Support</p>
+              <span className="text-[hsl(var(--primary))] text-md md:text-2xl">24/7</span>
+              <p className="text-[hsl(var(--text))] text-sm md:text-lg">Support</p>
             </div>
           </div>
         </div>
@@ -68,14 +73,25 @@ const HeroSection = () => {
           </div>
 
           {/* Logo Box */}
-          <div className="absolute -bottom-5 -left-2.5 md:-left-5 bg-[#1E56A0] p-5 rounded-2xl shadow-xl">
-            <Image
-              src="/assets/images/Logo2.svg"
-              width={80}
-              height={80}
-              alt="styles-tracking-logo"
-              className="w-15 md:w-20"
-            />
+          <div className="absolute -bottom-5 -left-2.5 md:-left-5 bg-[hsl(var(--primary))] p-5 rounded-2xl shadow-xl">
+            {theme === 'dark' ? (
+              <Image
+                src="/assets/images/Logo.svg"
+                width={80}
+                height={80}
+                alt="styles-tracking-logo"
+                className="w-15 md:w-20"
+              />
+            ) : (
+
+              <Image
+                src="/assets/images/Logo2.svg"
+                width={80}
+                height={80}
+                alt="styles-tracking-logo"
+                className="w-15 md:w-20"
+              />
+            )}
           </div>
         </div>
       </div>

@@ -1,11 +1,16 @@
+'use client'
 import { about, AboutImages } from "@/components/data/db";
 import SubTitle from "@/components/ui/SubTitle";
 import Titles from "@/components/ui/Titles";
 import Image from "next/image";
+// Importing Language Provider
+import { useTheme } from "@/context/theme/ThemeProvider";
 
 const WhyUsSection = () => {
+    const { theme } = useTheme();
+
   return (
-    <section className="bg-[#F8FAFC] py-10" id="about">
+    <section className={`${theme === 'dark' ? 'bg-[#121d3e]' : 'bg-[#F8FAFC]'} py-10`} id="about">
       <div className="container mx-auto px-5 gap-5">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Images */}
@@ -39,12 +44,12 @@ const WhyUsSection = () => {
                 const Icon = icon.icons;
                 return (
                   <div key={i} className="flex items-start gap-5">
-                    <span className="bg-[#1E56A0] text-white rounded-xl p-3">
+                    <span className="bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] rounded-xl p-3">
                       <Icon size={20} />
                     </span>
                     <div className="flex flex-col gap-1">
                       <p>{icon.name}</p>
-                      <p className="text-gray-600 text-sm">{icon.desc}</p>
+                      <p className="text-[hsl(var(--text))] text-sm">{icon.desc}</p>
                     </div>
                   </div>
                 );

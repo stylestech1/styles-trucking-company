@@ -7,7 +7,7 @@ const CareerSection = () => {
     <section className="container mx-auto px-5 gap-5 my-15 " id="careers">
       {/* Info */}
       <div className="flex flex-col gap-5">
-        <div className="flex items-center gap-2 text-sm md:text-lg text-white bg-[#1E56A0] rounded-sm py-2 px-5 w-fit">
+        <div className="flex items-center gap-2 text-sm md:text-lg text-[hsl(var(--secondary))] bg-[hsl(var(--primary))] rounded-sm py-2 px-5 w-fit">
           <Users size={18} />
           <span>Come Join Our Family</span>
         </div>
@@ -17,13 +17,13 @@ const CareerSection = () => {
             <ul key={i} className="space-y-3">
               <p className="text-2xl font-medium">{data.title}</p>
               {data.subtitle ? (
-                <p className="text-lg text-gray-600">{`"${data.subtitle}"`}</p>
+                <p className="text-lg text-[hsl(var(--text))]">{`"${data.subtitle}"`}</p>
               ) : (
                 ""
               )}
               {data.data.map((d, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="rounded-full p-1 mt-1 bg-[#1E56A0] text-white">
+                  <span className="rounded-full p-1 mt-1 bg-[hsl(var(--primary))] text-[hsl(var(--secondary))]">
                     <Check size={8} />
                   </span>
                   <li>{d}</li>
@@ -35,7 +35,7 @@ const CareerSection = () => {
 
         <Link
           href={"https://intelliapp.driverapponline.com/c/3195503"}
-          className={`flex items-center justify-center gap-2 py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[#1E56A0] text-white shadow-lg md:w-fit mx-auto`}
+          className={`flex items-center justify-center gap-2 py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg md:w-fit mx-auto`}
         >
           <span>Apply Now</span>
           <span>

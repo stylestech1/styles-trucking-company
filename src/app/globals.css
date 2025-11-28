@@ -1,34 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* @media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 223 84% 5%;
+    --primary: 214 68% 37%;
+    --secondary: 0 0% 100%;
+    --text: 206, 10%, 32%
   }
-} */
 
-html {
-  scroll-behavior: smooth;
-}
+  .dark {
+    --background: 225 55 13;
+    --foreground: 210 40% 98%;
+    --primary: 0 0% 100%;
+    --secondary: 214 68% 37%;
+    --text: 214, 100%, 91%
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  html {
+    scroll-behavior: smooth;
+  }
 
-section {
-  scroll-margin-top: 100px;
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] transition-colors duration-300;
+  }
+
+  html[dir="rtl"] {
+    text-align: right;
+  }
+
+  html[dir="ltr"] {
+    text-align: left;
+  }
+
+  main {
+    min-height: calc(100vh - 267.02px);
+  }
+
+  .react-international-phone-country-selector-button {
+    width: 50px !important;
+    height: 52px !important;
+  }
+
+  section {
+    scroll-margin-top: 100px;
+  }
 }

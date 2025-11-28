@@ -8,7 +8,7 @@ const SubTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={`text-md text-[#4a5565] pb-5 text-center ${align} xl:w-200 mx-auto`}>
+    <h4 className={`text-md text-[hsl(var(--text))] pb-5 text-center ${align} xl:w-200 mx-auto`}>
       {children}
     </h4>
   );

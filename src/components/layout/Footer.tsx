@@ -11,12 +11,12 @@ const Footer = () => {
     <footer className="bg-[#0F172A] text-white relative">
       {/* Top CTA Section */}
       {pathname !== "/policy" && (
-        <div className="bg-[#1E56A0] px-6 py-16 rounded-3xl hidden lg:block w-225 xl:w-300 absolute top-10 left-1/2 -translate-1/2">
+        <div className="bg-[hsl(var(--primary))] px-6 py-16 rounded-3xl hidden lg:block w-225 xl:w-300 absolute top-10 left-1/2 -translate-1/2">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-4xl mb-6">
+            <h2 className="text-2xl md:text-4xl mb-6 text-[hsl(var(--secondary))]">
               Built Exclusively for Styles Trucking Drivers
             </h2>
-            <p className="text-blue-100 text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
+            <p className="text-[hsl(var(--secondary))] text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
               Stay updated with real-time load tracking, manage deliveries,
               navigate routes with maps, check your paycheck, and update your
               profile. Fast, reliable, synced across all devices, and 100%
@@ -25,7 +25,7 @@ const Footer = () => {
 
             <Link
               href="#"
-              className="inline-flex items-center gap-3 bg-white text-[#1E56A0] font-semibold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-3 bg-[hsl(var(--secondary))] text-[hsl(var(--primary))] font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-xl"
             >
               Download Driver App
               <ArrowRight size={20} />

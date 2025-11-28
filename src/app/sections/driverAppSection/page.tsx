@@ -9,7 +9,7 @@ const DriverApp = () => {
     <section className="py-5 md:py-15" id="driverApp">
       <div className="container mx-auto px-5">
         {/* Titles */}
-        <div className="flex items-center mx-auto gap-2 text-sm md:text-lg text-white bg-[#1E56A0] rounded-sm py-2 px-5 w-fit">
+        <div className="flex items-center mx-auto gap-2 text-sm md:text-lg text-[hsl(var(--secondary))] bg-[hsl(var(--primary))] rounded-sm py-2 px-5 w-fit">
           <Smartphone size={18} />
           <span>For Our Drivers</span>
         </div>
@@ -43,7 +43,7 @@ const DriverApp = () => {
                 </span>
                 <div className="flex flex-col gap-1">
                   <p className="text-xl">{icon.name}</p>
-                  <p className="text-sm text-gray-700">{icon.desc}</p>
+                  <p className="text-sm text-[hsl(var(--text))]">{icon.desc}</p>
                 </div>
               </div>
             );
