@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#0F172A] text-white relative">
       {/* Top CTA Section */}
-      {pathname !== "/policy" && (
+      {pathname !== "/policy" && pathname !== "/apply" && (
         <div className="bg-[hsl(var(--primary))] px-6 py-16 rounded-3xl hidden lg:block w-225 xl:w-300 absolute top-10 left-1/2 -translate-1/2">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl md:text-4xl mb-6 text-[hsl(var(--secondary))]">

@@ -116,7 +116,7 @@ const Header = () => {
           >
             {theme === "dark" ? (
               <Image
-                src="/assets/images/Logo2.svg"
+                src="/assets/images/NewLogo.png"
                 width={45}
                 height={45}
                 alt="logo"
@@ -125,7 +125,7 @@ const Header = () => {
               />
             ) : (
               <Image
-                src="/assets/images/Logo.svg"
+                src="/assets/images/NewLogo.png"
                 width={45}
                 height={45}
                 alt="logo"
@@ -168,14 +168,13 @@ const Header = () => {
           >
             <Link
               href={"tel:+4794803064"}
-              className={`py-2.5 px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg ${
-                isScrolled ? "shadow-blue-500/25" : "shadow-white/20"
-              }`}
+              className={`py-2.5 px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg ${isScrolled ? "shadow-blue-500/25" : "shadow-white/20"
+                }`}
             >
               Contact Us
             </Link>
           </motion.div>
-
+          {/* 
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -185,7 +184,7 @@ const Header = () => {
             className="flex items-center gap-2"
           >
             <ThemeToggle />
-          </motion.div>
+          </motion.div> */}
         </ul>
 
         {/* Hamburger Button */}
@@ -194,7 +193,7 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <motion.button onClick={() => setOpenMenu(!openMenu)}>
             <TextAlignJustify size={20} />
           </motion.button>
@@ -230,7 +229,7 @@ const Header = () => {
                   >
                     {theme === "dark" ? (
                       <Image
-                        src={"/assets/images/Logo2.svg"}
+                        src="/assets/images/NewLogo.png"
                         width={40}
                         height={40}
                         alt="logo"
@@ -238,7 +237,7 @@ const Header = () => {
                       />
                     ) : (
                       <Image
-                        src={"/assets/images/Logo.svg"}
+                        src="/assets/images/NewLogo.png"
                         width={40}
                         height={40}
                         alt="logo"
@@ -270,9 +269,8 @@ const Header = () => {
                     <motion.li
                       key={index}
                       variants={itemVariants}
-                      className={`border-b border-[hsl(var(--text))] pb-4 text-center ${
-                        index === arr.length - 1 ? "border-b-0" : ""
-                      }`}
+                      className={`border-b border-[hsl(var(--text))] pb-4 text-center ${index === arr.length - 1 ? "border-b-0" : ""
+                        }`}
                     >
                       <Link
                         href={item.href}

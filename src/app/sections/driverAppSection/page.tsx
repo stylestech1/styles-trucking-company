@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const DriverApp = () => {
   return (
-    <section className="py-5 md:py-15" id="driverApp">
+    <section className="py-5 md:py-15 mb-22" id="driverApp">
       <div className="container mx-auto px-5">
         {/* Titles */}
         <div className="flex items-center mx-auto gap-2 text-sm md:text-lg text-[hsl(var(--secondary))] bg-[hsl(var(--primary))] rounded-sm py-2 px-5 w-fit">
