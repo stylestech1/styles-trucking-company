@@ -1,7 +1,7 @@
 {
   "name": "styles-trucking-company",
   "version": "0.1.0",
-  "private": true,
+  "private": true,https://github.com/stylestech1/styles-trucking-company/pull/1/conflict?name=package.json&ancestor_oid=fe06246f93bc67334c5e7fe0417afb3ae8bb9413&base_oid=1252f669f22bad0680b1a2712decd14ee07f6301&head_oid=6b3e8accc904c9fb674c4df6d05a6fff0d877b33
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,10 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "country-state-city": "^3.2.1",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.554.0",
     "next": "16.0.10",
     "react": "19.2.0",
+    "react-bits": "^1.0.5",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
