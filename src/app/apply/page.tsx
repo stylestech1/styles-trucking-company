@@ -100,7 +100,7 @@ export default function ApplyPage() {
 
     const items = [
         {
-            label: "Minimum 1 year experience",
+            label: "Minimum 2 years experience",
             icon: <Route className="h-5 w-5 text-[#ff9f81] bg-[#fff1ec]" />,
         },
         {
@@ -108,7 +108,7 @@ export default function ApplyPage() {
             icon: <ShieldCheck className="h-5 w-5 text-[#ff9f81] bg-[#fff1ec]" />,
         },
         {
-            label: "Incident and violation free for the last 2 years",
+            label: "Accident free for the last 2 years",
             icon: <ShieldUser className="h-5 w-5 text-[#ff9f81] bg-[#fff1ec]" />,
         },
         {

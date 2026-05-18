@@ -9,8 +9,8 @@ export default function Home() {
     <main>
       <HeroSection />
       <ServiceSection />
-      <WhyUsSection />
       <CareerSection />
+      <WhyUsSection />
       <DriverApp />
     </main>
   );

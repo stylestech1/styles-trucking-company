@@ -36,7 +36,7 @@ const HeroSection = () => {
               href={"tel:+4794803064"}
               className={`py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg w-fit`}
             >
-              Contact Now
+              Call us Now
             </Link>
           </div>
 

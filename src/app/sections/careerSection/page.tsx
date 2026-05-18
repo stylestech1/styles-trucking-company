@@ -29,14 +29,14 @@ const CareerSection = () => {
           ))}
         </div> */}
         <div className="w-full bg-[#f5f6f8] py-16">
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-6  gap-12 items-center">
 
             {/* LEFT SIDE */}
             <div>
               {/* Careers Badge */}
-              <div className="flex items-center gap-2 text-sm font-medium 
+              <div className="flex items-center gap-2 text-lg font-meduim 
         text-white bg-[hsl(var(--primary))] 
-        rounded-md px-4 py-2 w-fit mb-6">
+        rounded-md px-22 py-4 w-fit mb-6">
                 <Users size={18} />
                 <span>Careers</span>
               </div>
@@ -54,53 +54,117 @@ const CareerSection = () => {
                 We are always looking for experienced, safety-focused drivers to join our growing team.
               </p>
 
-              {/* Benefits List */}
-              <div className="space-y-4 mb-8">
+              {/* Benefits Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
                 {[
                   {
-                    title: "Competitive Pay & Benefits",
-                    desc: "Industry-leading compensation with comprehensive health and retirement benefits.",
+                    title: "Competitive Pay",
+                    points: [
+                      "Start at $0.70 CPM (Reefer)",
+                      "Increase to $0.80 CPM after 3 months based on performance",
+                      "$1,920 – $2,500/week",
+                      "2,800 – 3,200 miles/week",
+                      "Steady freight — no sitting",
+                    ],
                   },
                   {
                     title: "Flexible Schedules",
-                    desc: "Flexible schedules and routes designed to get you home when it matters.",
+                    points: [
+                      "3 weeks out = 4 days home",
+                      "4 weeks out = 1 week home",
+                      "No NY or CA",
+                      "Snow lanes avoided when possible",
+                    ],
+                  },
+                  {
+                    title: "Equipment",
+                    points: [
+                      "2021+ Freightliners",
+                      "Microwave, fridge, inverter",
+                      "PrePass & GPS",
+                    ],
                   },
                   {
                     title: "Comprehensive Benefits",
-                    desc: "Drive the latest trucks equipped with advanced safety and comfort features.",
+                    subtitle: "Benefits (after 90 days)",
+                    points: [
+                      "Health, Dental, Vision",
+                      "401(k)",
+                      "Rider & pet policy",
+                    ],
                   },
+                  {
+                    title: "Requirements",
+                    points: [
+                      "Clean record",
+                      "Accidents free for the last 2 years",
+                      "Valid CDL & medical card",
+                    ],
+                  },
+                  {
+                    title: "Our lanes",
+                    points: [
+                      " AR, OK, MO, KS, IL, OH, PA, MD, VA, NC, SC, GA, TN, MS, KY, AL, LA, and TX."
+                    ]
+                  }
                 ].map((item, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="bg-[hsl(var(--primary))] text-white rounded-full p-1 mt-1">
-                      <Check size={16} />
-                    </div>
-                    <div>
-                      <h4 className=" text-gray-900">
+                  <div
+                    key={index}
+                    className="bg-white border-2 border-[hsl(var(--primary))]/20 rounded-2xl p-5 
+      shadow-sm hover:shadow-md hover:border-[hsl(var(--primary))] 
+      transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="bg-[hsl(var(--primary))] text-white rounded-full p-1.5">
+                        <Check size={16} />
+                      </div>
+
+                      <h4 className="text-gray-900 font-semibold text-lg">
                         {item.title}
                       </h4>
-                      <p className="text-gray-600 text-sm">
-                        {item.desc}
-                      </p>
                     </div>
+
+                    {item.subtitle && (
+                      <p className="text-gray-700 font-medium mb-3">
+                        {item.subtitle}
+                      </p>
+                    )}
+
+                    <ul className="space-y-2">
+                      {item.points.map((point, pointIndex) => (
+                        <li
+                          key={pointIndex}
+                          className="flex items-start gap-2 text-gray-600 text-sm leading-relaxed"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--primary))] mt-2 shrink-0" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
 
               {/* Apply Button */}
-              <Link
-                href="/apply"
-                className="inline-flex items-center gap-2 
-        bg-[hsl(var(--primary))] text-white 
-        px-6 py-3 rounded-lg font-medium 
-        hover:opacity-90 transition-all shadow-md"
-              >
-                Apply Now
-                <ArrowRight size={18} />
-              </Link>
+              <div className="flex justify-center my-10">
+                <Link
+                  href="https://land.driverapponline.com/land-rover1?active_job_id=84501"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2
+      w-[320px] h-[56px]
+      bg-[hsl(var(--primary))] text-white
+      rounded-lg font-medium
+      hover:opacity-90 transition-all shadow-md"
+                >
+                  Apply Now
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
             </div>
 
             {/* RIGHT SIDE IMAGE */}
-            <div className="flex justify-center md:justify-end">
+            {/* <div className="flex justify-center md:justify-end">
               <Image
                 src="/Image.png"
                 width={450}
@@ -109,7 +173,7 @@ const CareerSection = () => {
                 loading="eager"
                 className="rounded-lg"
               />
-            </div>
+            </div> */}
 
           </div>
         </div>
