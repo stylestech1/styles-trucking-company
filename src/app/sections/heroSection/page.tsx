@@ -10,8 +10,8 @@ const HeroSection = () => {
 
   return (
     <section className="my-6 md:my-10">
-      <div className="container mx-auto px-4 md:px-5">
-        <div className="relative w-full min-h-[620px] md:min-h-[700px] lg:min-h-screen rounded-3xl overflow-hidden">
+      <div className="container">
+        <div className="relative w-full min-h-[620px] md:min-h-[700px] lg:min-h-screen  overflow-hidden">
           <Image
             src="/assets/images/truck image.webp"
             fill
