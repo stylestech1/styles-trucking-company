@@ -6,92 +6,74 @@ import Link from "next/link";
 import { useTheme } from "@/context/theme/ThemeProvider";
 
 const HeroSection = () => {
-    const { theme } = useTheme();
-  
+  const { theme } = useTheme();
+
   return (
-    <section className={`${theme === 'dark' ? 'bg-[#121d3e]' : 'bg-[#F8FAFC]'} py-25 lg:py-50`}>
-      <div className="container mx-auto px-5 flex flex-col lg:flex-row justify-between items-start gap-5 2xl:gap-50">
-        {/* Text-Info */}
-        <div className="flex flex-col items-center lg:items-start lg:gap-5 mx-auto text-center lg:text-left">
-          <div className="hidden md:flex items-center gap-2 text-sm md:text-lg text-[hsl(var(--secondary))] bg-[hsl(var(--primary))] rounded-sm py-2 px-5 w-fit">
-            <span>
-              <Truck size={18} />
-            </span>
-            <span className="text-sm md:text-md">Transportation & Logistics Excellence</span>
+    <section className="my-6 md:my-10">
+      <div className="container mx-auto px-4 md:px-5">
+        <div className="relative w-full min-h-[620px] md:min-h-[700px] lg:min-h-screen rounded-3xl overflow-hidden">
+          <Image
+            src="/assets/images/truck image.webp"
+            fill
+            alt="styles-tracking"
+            className="object-cover object-center md:object-center"
+            priority
+          />
+
+          <div className="absolute inset-0 bg-black/50"></div>
+
+          <div className="relative z-10 flex h-full min-h-[620px] md:min-h-[700px] lg:min-h-screen items-center justify-start lg:justify-end p-5 md:p-8 lg:p-16">
+            <div className="w-full max-w-[320px] sm:max-w-md lg:max-w-xl text-white flex flex-col items-start lg:items-start gap-4 md:gap-6">
+              <div className="hidden md:flex items-center gap-2 text-white bg-[#B8863B] rounded-sm py-2 px-5 w-fit">
+                <Truck size={18} />
+                <span>Transportation & Logistics Excellence</span>
+              </div>
+
+              <h1 className="text-[36px] sm:text-5xl lg:text-6xl font-bold leading-[1.15] break-words">
+                Your{" "}
+                <span className="text-[#B8863B]">Trusted Partner</span>{" "}
+                in Freight Transportation
+              </h1>
+
+              <p className="text-white/90 text-base md:text-lg leading-relaxed">
+                Styles Trucking delivers reliability and excellence across America.
+                With our drivers, we ensure safe, timely delivery.
+              </p>
+
+              <Link
+                href="tel:+4794803064"
+                className="py-3 px-8 rounded-lg font-medium bg-[#B8863B] text-white shadow-lg"
+              >
+                Call Us Now
+              </Link>
+
+              <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-5 w-full">
+                <div>
+                  <span className="text-[#B8863B] text-xl md:text-2xl font-bold">6+</span>
+                  <p className="text-white/80 text-xs md:text-base">Years Experience</p>
+                </div>
+
+                <div>
+                  <span className="text-[#B8863B] text-xl md:text-2xl font-bold">50+</span>
+                  <p className="text-white/80 text-xs md:text-base">States Coverage</p>
+                </div>
+
+                <div>
+                  <span className="text-[#B8863B] text-xl md:text-2xl font-bold">24/7</span>
+                  <p className="text-white/80 text-xs md:text-base">Support</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* text */}
-          <div className="my-10 lg:my-5 flex flex-col items-center lg:items-start w-full gap-5">
-            <h1 className="text-3xl">
-              Your <span className="text-[hsl(var(--primary))] font-medium">Trusted Partner</span> in
-              Freight Transportation
-            </h1>
-
-            <p className="text-[hsl(var(--text))]">
-              Styles Trucking delivers reliability and excellence across
-              America. With our drivers, We ensure safe, timely delivery
-            </p>
-
-            <Link 
-              href={"tel:+4794803064"}
-              className={`py-2.5 px-20 md:px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg w-fit`}
-            >
-              Call us Now
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-3 gap-5 lg:gap-10">
-            <div className="flex flex-col items-center md:items-start">
-              <span className="text-[hsl(var(--primary))] text-md md:text-2xl">6+</span>
-              <p className="text-[hsl(var(--text))] text-sm md:text-lg">Years Experience</p>
-            </div>
-            <div className="flex flex-col items-center md:items-start">
-              <span className="text-[hsl(var(--primary))] text-md md:text-2xl">50+</span>
-              <p className="text-[hsl(var(--text))] text-sm md:text-lg">States Coverage</p>
-            </div>
-            <div className="flex flex-col items-center md:items-start">
-              <span className="text-[hsl(var(--primary))] text-md md:text-2xl">24/7</span>
-              <p className="text-[hsl(var(--text))] text-sm md:text-lg">Support</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Images */}
-        <div className="relative rounded-2xl shadow-lg my-10 lg:my-0">
-          {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="absolute bottom-2 left-5 bg-white p-3 md:p-4 rounded-2xl shadow-2xl z-20">
             <Image
-              src="/assets/images/Container.webp"
-              width={1000}
-              height={1000}
-              alt="styles-tracking"
-              className="rounded-2xl object-cover"
+              src="/assets/images/NewLogo.png"
+              width={80}
+              height={80}
+              alt="styles-tracking-logo"
+              className="w-12 md:w-20"
             />
-
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-linear-to-t from-[#1e56a08f] to-transparent"></div>
-          </div>
-
-          {/* Logo Box */}
-          <div className="absolute -bottom-5 -left-2.5 md:-left-5 bg-[hsl(var(--primary))] p-5 rounded-2xl shadow-xl">
-            {theme === 'dark' ? (
-              <Image
-                src="/assets/images/Logo.svg"
-                width={80}
-                height={80}
-                alt="styles-tracking-logo"
-                className="w-15 md:w-20"
-              />
-            ) : (
-
-              <Image
-                src="/assets/images/Logo2.svg"
-                width={80}
-                height={80}
-                alt="styles-tracking-logo"
-                className="w-15 md:w-20"
-              />
-            )}
           </div>
         </div>
       </div>
