@@ -170,7 +170,7 @@ export default function ApplyPage() {
             };
 
             const response = await fetch(
-                `${baseUrl}/api/v1driver-applicants/public`,
+                `${baseUrl}/api/v1/driver-applicants/public`,
                 {
                     method: "POST",
                     headers: {
