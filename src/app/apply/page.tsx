@@ -35,7 +35,7 @@ export default function ApplyPage() {
     };
     const baseUrl =
         process.env.NEXT_PUBLIC_API_URL ||
-        "https://www.stylestrucking.com";
+        "https://styles-dispatch-management-prod.onrender.com";
 
     const setField = (key: keyof FormState, value: string) => {
         if (key === "phone") {
