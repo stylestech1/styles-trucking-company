@@ -18,7 +18,7 @@ type ErrorState = Partial<Record<keyof FormState, string>>;
 
 const digitsOnly = (value: string) => value.replace(/\D/g, "");
 
-const BASE_URL = "https://www.stylestrucking.com";
+const BASE_URL = "https://styles-dispatch-management-prod.onrender.com";
 
 export default function ApplyPage() {
     const [activeStep, setActiveStep] = useState(1);
