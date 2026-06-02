@@ -18,9 +18,13 @@ type ErrorState = Partial<Record<keyof FormState, string>>;
 
 const digitsOnly = (value: string) => value.replace(/\D/g, "");
 
+const BASE_URL = "https://www.stylestrucking.com";
+
 export default function ApplyPage() {
     const [activeStep, setActiveStep] = useState(1);
     const [errors, setErrors] = useState<ErrorState>({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [form, setForm] = useState<FormState>({
         firstName: "",
         lastName: "",
@@ -30,67 +34,45 @@ export default function ApplyPage() {
         violations: "",
         readyDate: "",
     });
-    const isValidEmail = (email: string) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-    };
-    // const baseUrl =
-    //     process.env.NEXT_PUBLIC_API_URL ||
-    //     "https://www.stylestrucking.com";
+
+    const isValidEmail = (email: string) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
     const setField = (key: keyof FormState, value: string) => {
-        if (key === "phone") {
-            value = value.replace(/\D/g, "");
-        }
+        if (key === "phone") value = digitsOnly(value);
 
-        setForm((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
+        setForm((prev) => ({ ...prev, [key]: value }));
 
         setErrors((prev) => {
             const next = { ...prev };
 
-            switch (key) {
-                case "firstName":
-                    next.firstName = value.trim()
-                        ? ""
-                        : "First name is required";
-                    break;
+            if (key === "firstName") {
+                next.firstName = value.trim() ? "" : "First name is required";
+            }
 
-                case "lastName":
-                    next.lastName = value.trim()
-                        ? ""
-                        : "Last name is required";
-                    break;
+            if (key === "lastName") {
+                next.lastName = value.trim() ? "" : "Last name is required";
+            }
 
-                case "phone":
-                    if (!value.trim()) {
-                        next.phone = "Phone number is required";
-                    } else if (value.length < 7) {
-                        next.phone = "Phone number must be at least 7 digits";
-                    } else {
-                        next.phone = "";
-                    }
-                    break;
+            if (key === "phone") {
+                next.phone = !value.trim()
+                    ? "Phone number is required"
+                    : value.length < 7
+                        ? "Phone number must be at least 7 digits"
+                        : "";
+            }
 
-                case "email":
-                    if (!value.trim()) {
-                        next.email = "Email is required";
-                    } else if (!isValidEmail(value)) {
-                        next.email = "Please enter a valid email address";
-                    } else {
-                        next.email = "";
-                    }
-                    break;
-
-                default:
-                    break;
+            if (key === "email") {
+                next.email = !value.trim()
+                    ? "Email is required"
+                    : !isValidEmail(value)
+                        ? "Please enter a valid email address"
+                        : "";
             }
 
             return next;
         });
     };
-
 
     const validateStep = (step: number) => {
         const nextErrors: ErrorState = {};
@@ -131,19 +113,21 @@ export default function ApplyPage() {
     };
 
     const canProceed = useMemo(() => {
+        if (isSubmitting) return false;
+
         if (activeStep === 1) {
             return Boolean(
                 form.firstName.trim() &&
                 form.lastName.trim() &&
                 form.phone.trim() &&
-                form.phone.length >= 7 &&
+                digitsOnly(form.phone).length >= 7 &&
                 form.email.trim() &&
                 isValidEmail(form.email)
             );
         }
 
         if (activeStep === 2) {
-            return (
+            return Boolean(
                 form.experienceYears.trim() &&
                 form.violations.trim() &&
                 form.readyDate.trim()
@@ -151,45 +135,52 @@ export default function ApplyPage() {
         }
 
         return false;
-    }, [activeStep, form]);
+    }, [activeStep, form, isSubmitting]);
 
     const handleSubmit = async () => {
         const isValid = validateStep(2);
-
         if (!isValid) return false;
+
+        setIsSubmitting(true);
 
         try {
             const payload = {
-                firstName: form.firstName,
-                lastName: form.lastName,
-                phone: form.phone,
-                email: form.email,
-                experienceYears: form.experienceYears,
-                violations: form.violations,
+                firstName: form.firstName.trim(),
+                lastName: form.lastName.trim(),
+                phone: digitsOnly(form.phone),
+                email: form.email.trim(),
+                experienceYears: form.experienceYears.trim(),
+                violations: form.violations.trim(),
                 readyDate: form.readyDate,
             };
 
-            const baseUrl = "https://www.stylestrucking.com";
+            const response = await fetch(
+                `${BASE_URL}/api/v1/driver-applicants/public`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
 
-            const response = await fetch(`${baseUrl}/api/v1/driver-applicants/public`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
+            const text = await response.text();
 
-            const contentType = response.headers.get("content-type");
-
-            const result = contentType?.includes("application/json")
-                ? await response.json()
-                : { message: await response.text() };
+            let result: any = {};
+            try {
+                result = text ? JSON.parse(text) : {};
+            } catch {
+                throw new Error(
+                    "This API route is returning an HTML page, not JSON. Please check that /api/v1/driver-applicants/public exists on www.stylestrucking.com."
+                );
+            }
 
             if (!response.ok) {
                 throw new Error(result?.message || "Failed to submit application");
             }
-            
+
             alert("Application submitted successfully");
 
             setForm({
@@ -202,26 +193,22 @@ export default function ApplyPage() {
                 readyDate: "",
             });
 
+            setErrors({});
             setActiveStep(1);
 
             return false;
         } catch (error: any) {
             console.error(error);
-
             alert(error?.message || "Failed to submit application");
-
             return false;
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
     const onBeforeNext = async (step: number) => {
-        if (step === 1) {
-            return validateStep(1);
-        }
-
-        if (step === 2) {
-            return handleSubmit();
-        }
-
+        if (step === 1) return validateStep(1);
+        if (step === 2) return handleSubmit();
         return true;
     };
 
@@ -235,12 +222,17 @@ export default function ApplyPage() {
                         onBeforeNext={onBeforeNext}
                         onFinalStepCompleted={() => { }}
                         backButtonText="Previous"
-                        nextButtonText={activeStep === 2 ? "Submit" : "Next"}
+                        nextButtonText={
+                            activeStep === 2
+                                ? isSubmitting
+                                    ? "Submitting..."
+                                    : "Submit"
+                                : "Next"
+                        }
                         nextButtonProps={{
                             disabled: !canProceed,
                         }}
                     >
-                        {/* STEP 1 */}
                         <Step>
                             <div className="space-y-4 sm:space-y-5">
                                 <Field
@@ -283,7 +275,6 @@ export default function ApplyPage() {
                             </div>
                         </Step>
 
-                        {/* STEP 2 */}
                         <Step>
                             <div className="space-y-4 sm:space-y-5">
                                 <Field
@@ -394,15 +385,13 @@ function TextAreaField({
                     }`}
             />
 
-            <div className="flex items-center justify-between mt-1">
-                <p className="text-xs text-red-500 min-h-[18px]">
-                    {error || ""}
-                </p>
+            <div className="mt-1 flex items-center justify-between">
+                <p className="min-h-[18px] text-xs text-red-500">{error || ""}</p>
 
                 <p
                     className={`text-xs ${value.length >= maxLength
-                        ? "text-red-500 font-medium"
-                        : "text-slate-400"
+                            ? "font-medium text-red-500"
+                            : "text-slate-400"
                         }`}
                 >
                     {value.length}/{maxLength}
