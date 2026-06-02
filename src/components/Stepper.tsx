@@ -1,13 +1,18 @@
-import { AnimatePresence, motion, Variants } from "motion/react";
+"use client";
+
 import React, {
   Children,
   HTMLAttributes,
   JSX,
   ReactNode,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
+
+import { AnimatePresence, motion, Variants } from "motion/react";
+
 
 import "../app/globals.css";
 
@@ -41,8 +46,8 @@ interface RenderStepIndicatorProps {
 export default function Stepper({
   children,
   initialStep = 1,
-  onStepChange = () => {},
-  onFinalStepCompleted = () => {},
+  onStepChange = () => { },
+  onFinalStepCompleted = () => { },
   onBeforeNext,
   stepCircleContainerClassName = "",
   stepContainerClassName = "",

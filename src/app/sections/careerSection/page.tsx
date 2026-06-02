@@ -148,7 +148,8 @@ const CareerSection = () => {
               {/* Apply Button */}
               <div className="flex justify-center my-10">
                 <Link
-                  href="https://land.driverapponline.com/land-rover1?active_job_id=84501"
+                  href="/apply"
+                  // href="https://land.driverapponline.com/land-rover1?active_job_id=84501"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2

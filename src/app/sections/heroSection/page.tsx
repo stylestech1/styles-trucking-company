@@ -11,7 +11,7 @@ const HeroSection = () => {
   return (
     <section className="my-6 md:my-10">
       <div className="container">
-        <div className="relative w-full min-h-[620px] md:min-h-[700px] lg:min-h-screen  overflow-hidden">
+        <div className="relative w-screen min-h-screen overflow-hidden">
           <Image
             src="/assets/images/truck image.webp"
             fill
