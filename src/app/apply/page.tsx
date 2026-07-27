@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Stepper, { Step } from "@/components/Stepper";
 
 type FormState = {
@@ -9,6 +9,7 @@ type FormState = {
     lastName: string;
     phone: string;
     email: string;
+    state: string;
     experienceYears: string;
     violations: string;
     readyDate: string;
@@ -24,12 +25,14 @@ export default function ApplyPage() {
     const [activeStep, setActiveStep] = useState(1);
     const [errors, setErrors] = useState<ErrorState>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
     const [form, setForm] = useState<FormState>({
         firstName: "",
         lastName: "",
         phone: "",
         email: "",
+        state: "",
         experienceYears: "",
         violations: "",
         readyDate: "",
@@ -70,6 +73,10 @@ export default function ApplyPage() {
                         : "";
             }
 
+            if (key === "state") {
+                next.state = value.trim() ? "" : "State is required";
+            }
+
             return next;
         });
     };
@@ -92,6 +99,8 @@ export default function ApplyPage() {
             } else if (!isValidEmail(form.email)) {
                 nextErrors.email = "Please enter a valid email address";
             }
+
+            if (!form.state.trim()) nextErrors.state = "State is required";
         }
 
         if (step === 2) {
@@ -122,7 +131,8 @@ export default function ApplyPage() {
                 form.phone.trim() &&
                 digitsOnly(form.phone).length >= 7 &&
                 form.email.trim() &&
-                isValidEmail(form.email)
+                isValidEmail(form.email) &&
+                form.state.trim()
             );
         }
 
@@ -137,6 +147,13 @@ export default function ApplyPage() {
         return false;
     }, [activeStep, form, isSubmitting]);
 
+    useEffect(() => {
+        if (!toast) return;
+
+        const timeout = setTimeout(() => setToast(null), 3500);
+        return () => clearTimeout(timeout);
+    }, [toast]);
+
     const handleSubmit = async () => {
         const isValid = validateStep(2);
         if (!isValid) return false;
@@ -149,6 +166,7 @@ export default function ApplyPage() {
                 lastName: form.lastName.trim(),
                 phone: digitsOnly(form.phone),
                 email: form.email.trim(),
+                state: form.state.trim(),
                 experienceYears: form.experienceYears.trim(),
                 violations: form.violations.trim(),
                 readyDate: form.readyDate,
@@ -181,13 +199,14 @@ export default function ApplyPage() {
                 throw new Error(result?.message || "Failed to submit application");
             }
 
-            alert("Application submitted successfully");
+            setToast({ type: "success", message: "Application submitted successfully" });
 
             setForm({
                 firstName: "",
                 lastName: "",
                 phone: "",
                 email: "",
+                state: "",
                 experienceYears: "",
                 violations: "",
                 readyDate: "",
@@ -199,7 +218,7 @@ export default function ApplyPage() {
             return false;
         } catch (error: any) {
             console.error(error);
-            alert(error?.message || "Failed to submit application");
+            setToast({ type: "error", message: error?.message || "Failed to submit application" });
             return false;
         } finally {
             setIsSubmitting(false);
@@ -272,6 +291,14 @@ export default function ApplyPage() {
                                     error={errors.email}
                                     type="email"
                                 />
+                                <Field
+                                    label="State"
+                                    required
+                                    placeholder="State"
+                                    value={form.state}
+                                    onChange={(value) => setField("state", value)}
+                                    error={errors.state}
+                                />
                             </div>
                         </Step>
 
@@ -309,6 +336,16 @@ export default function ApplyPage() {
                     </Stepper>
                 </div>
             </section>
+
+            {toast ? (
+                <div className="fixed top-5 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 rounded-2xl border px-4 py-3 shadow-xl transition-opacity duration-300 sm:px-5"
+                    style={{ backgroundColor: toast.type === "success" ? "#ecfdf5" : "#fef2f2", borderColor: toast.type === "success" ? "#10b981" : "#ef4444" }}>
+                    <p className={`text-sm font-semibold ${toast.type === "success" ? "text-emerald-700" : "text-red-700"}`}>
+                        {toast.type === "success" ? "Success" : "Error"}
+                    </p>
+                    <p className="mt-1 text-sm text-slate-700">{toast.message}</p>
+                </div>
+            ) : null}
         </main>
     );
 }
@@ -390,8 +427,8 @@ function TextAreaField({
 
                 <p
                     className={`text-xs ${value.length >= maxLength
-                            ? "font-medium text-red-500"
-                            : "text-slate-400"
+                        ? "font-medium text-red-500"
+                        : "text-slate-400"
                         }`}
                 >
                     {value.length}/{maxLength}
