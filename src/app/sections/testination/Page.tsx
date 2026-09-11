@@ -16,11 +16,11 @@ export default function Testination() {
         },
         {
             type: "video" as const,
-            src: "/assets/images/v2.mp4",
+            src: "/assets/images/v2.MP4",
         },
         {
             type: "video" as const,
-            src: "/assets/images/v3.mp4",
+            src: "/assets/images/v3.MP4",
         },
 
         {
