@@ -10,18 +10,54 @@ import "swiper/css/pagination";
 
 export default function Testination() {
     const items = [
-        { type: "video", src: "/assets/images/v1.mp4" },
-        { type: "video", src: "/assets/images/v2.mp4" },
-        { type: "video", src: "/assets/images/v3.mp4" },
+        {
+            type: "video" as const,
+            src: "/assets/images/v1.mp4",
+            poster: "/assets/images/1.jpg",
+        },
+        {
+            type: "video" as const,
+            src: "/assets/images/v2.mp4",
+            poster: "/assets/images/2.jpg",
+        },
+        {
+            type: "video" as const,
+            src: "/assets/images/v3.mp4",
+            poster: "/assets/images/3.jpg",
+        },
 
-        { type: "image", src: "/assets/images/1.jpg" },
-        { type: "image", src: "/assets/images/2.jpg" },
-        { type: "image", src: "/assets/images/3.jpg" },
-        { type: "image", src: "/assets/images/4.jpg" },
-        { type: "image", src: "/assets/images/5.jpg" },
-        { type: "image", src: "/assets/images/6.jpg" },
-        { type: "image", src: "/assets/images/7.jpg" },
-        { type: "image", src: "/assets/images/8.jpg" },
+        {
+            type: "image" as const,
+            src: "/assets/images/1.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/2.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/3.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/4.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/5.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/6.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/7.jpg",
+        },
+        {
+            type: "image" as const,
+            src: "/assets/images/8.jpg",
+        },
     ];
 
     return (
@@ -36,6 +72,7 @@ export default function Testination() {
                     spaceBetween={20}
                     slidesPerView={1}
                     loop={true}
+                    speed={800}
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
@@ -61,7 +98,9 @@ export default function Testination() {
                                 {item.type === "video" ? (
                                     <video
                                         src={item.src}
+                                        poster={item.poster}
                                         controls
+                                        preload="metadata"
                                         className="h-[300px] w-full object-cover"
                                     />
                                 ) : (
