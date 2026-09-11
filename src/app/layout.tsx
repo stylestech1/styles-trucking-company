@@ -15,7 +15,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "CDL-A Reefer Truck Driver Jobs | Styles Trucking",
+  title: "Styles Trucking",
   description: "Drive with Styles Trucking from Northwest Arkansas. Steady reefer miles, quality equipment, competitive weekly pay, and predictable home time.",
 };
 

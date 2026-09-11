@@ -13,17 +13,14 @@ export default function Testination() {
         {
             type: "video" as const,
             src: "/assets/images/v1.mp4",
-            poster: "/assets/images/1.jpg",
         },
         {
             type: "video" as const,
             src: "/assets/images/v2.mp4",
-            poster: "/assets/images/2.jpg",
         },
         {
             type: "video" as const,
             src: "/assets/images/v3.mp4",
-            poster: "/assets/images/3.jpg",
         },
 
         {
@@ -71,7 +68,7 @@ export default function Testination() {
                     modules={[Autoplay, Navigation, Pagination]}
                     spaceBetween={20}
                     slidesPerView={1}
-                    loop={true}
+                    loop
                     speed={800}
                     autoplay={{
                         delay: 3000,
@@ -98,7 +95,6 @@ export default function Testination() {
                                 {item.type === "video" ? (
                                     <video
                                         src={item.src}
-                                        poster={item.poster}
                                         controls
                                         preload="metadata"
                                         className="h-[300px] w-full object-cover"
