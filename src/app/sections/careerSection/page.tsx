@@ -15,7 +15,7 @@ const CareerSection = () => {
           </div>
           <p className="mt-5 text-xs text-slate-500">*Pay ranges are typical/expected and may vary based on miles, performance, and available freight.</p>
         </div>
-        <Image src="/assets/images/photo_4981127818515254451_y.jpg" width={700} height={480} alt="Styles Trucking driver" className="h-full min-h-64 w-full object-cover" />
+        <Image src="/assets/images/4.jpg" width={700} height={480} alt="Styles Trucking driver" className="h-full min-h-64 w-full object-cover" />
       </div>
       <div className="mt-10 grid gap-5 md:grid-cols-3">
         <div className="rounded-lg border border-slate-200 p-5"><ShieldCheck className="text-[hsl(var(--primary))]" size={22} /><h3 className="mt-3 font-semibold">What We&apos;re Looking For</h3><p className="mt-2 text-sm text-slate-500">Valid CDL-A, clean driving record, minimum two years of experience, and a professional safety mindset.</p></div>
