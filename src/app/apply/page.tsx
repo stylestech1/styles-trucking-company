@@ -234,6 +234,11 @@ export default function ApplyPage() {
     return (
         <main className="min-h-screen bg-[#f5f6f8] pt-[110px] pb-10 px-4">
             <section className="mx-auto w-full max-w-[760px]">
+                <div className="mb-5 rounded-xl bg-[#edf5ff] p-6 text-center">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">Styles Trucking Recruiting</p>
+                    <h1 className="mt-2 text-3xl font-bold text-slate-900">Apply to Drive With Styles</h1>
+                    <p className="mt-2 text-sm text-slate-600">Start with a short application. Our recruiting team will contact you about available CDL-A reefer positions.</p>
+                </div>
                 <div className="p-4">
                     <Stepper
                         initialStep={activeStep}

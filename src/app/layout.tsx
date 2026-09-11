@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script"; 
 import "./globals.css";
-import Header from "@/components/layout/Header";
+import ConditionalHeader from "@/components/layout/ConditionalHeader";
 import Footer from "@/components/layout/Footer";
 import ClientThemeProvider from "@/context/theme/ClientThemeProvider";
 
@@ -15,8 +15,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Styles Tracking Company",
-  description: "Styles Tracking Company",
+  title: "CDL-A Reefer Truck Driver Jobs | Styles Trucking",
+  description: "Drive with Styles Trucking from Northwest Arkansas. Steady reefer miles, quality equipment, competitive weekly pay, and predictable home time.",
 };
 
 const PIXEL_ID = "2107024183171560"; 
@@ -58,7 +58,7 @@ export default function RootLayout({
         </noscript>
 
         <ClientThemeProvider>
-          <Header />
+          <ConditionalHeader />
           {children}
           <Footer />
         </ClientThemeProvider>

@@ -8,7 +8,7 @@ import ThemeToggle from "@/context/theme/ThemeToggle";
 // Importing Language Provider
 import { useTheme } from "@/context/theme/ThemeProvider";
 
-const Header = () => {
+const Header = ({ cdlDriverJobs = false }: { cdlDriverJobs?: boolean }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme } = useTheme();
@@ -141,7 +141,7 @@ const Header = () => {
 
         {/* Links - Desktop */}
         <ul className="hidden lg:flex items-center gap-8">
-          {links.map((item, index) => (
+          {!cdlDriverJobs && links.map((item, index) => (
             <motion.li
               key={index}
               className="capitalize"
@@ -167,11 +167,11 @@ const Header = () => {
             transition={{ delay: 0.3, duration: 0.2 }}
           >
             <Link
-              href={"tel:+4794803064"}
+              href={cdlDriverJobs ? "/apply" : "tel:+4794803064"}
               className={`py-2.5 px-6 rounded-lg font-medium transition-all bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] shadow-lg ${isScrolled ? "shadow-blue-500/25" : "shadow-white/20"
                 }`}
             >
-              Contact Us
+              {cdlDriverJobs ? "Apply in 2 Minutes" : "Contact Us"}
             </Link>
           </motion.div>
           {/* 
@@ -189,14 +189,22 @@ const Header = () => {
 
         {/* Hamburger Button */}
         <motion.div
-          className={`flex lg:hidden p-3 rounded-lg transition-colors text-[hsl(var(--primary))] items-center gap-2`}
+          className={`flex lg:hidden rounded-lg transition-colors text-[hsl(var(--primary))] items-center gap-2`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {/* <ThemeToggle /> */}
-          <motion.button onClick={() => setOpenMenu(!openMenu)}>
-            <TextAlignJustify size={20} />
-          </motion.button>
+          {cdlDriverJobs ? (
+            <Link
+              href="/apply"
+              className="rounded-lg bg-[hsl(var(--primary))] px-3 py-2.5 text-sm font-sm text-[hsl(var(--secondary))] shadow-lg"
+            >
+              Apply 
+            </Link>
+          ) : (
+            <motion.button onClick={() => setOpenMenu(!openMenu)}>
+              <TextAlignJustify size={20} />
+            </motion.button>
+          )}
         </motion.div>
 
         {/* Mobile Menu - Side Panel */}

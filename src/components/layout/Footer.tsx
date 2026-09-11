@@ -14,20 +14,17 @@ const Footer = () => {
         <div className="bg-[hsl(var(--primary))] px-6 py-16 rounded-3xl hidden lg:block w-225 xl:w-300 absolute top-10 left-1/2 -translate-1/2">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl md:text-4xl mb-6 text-[hsl(var(--secondary))]">
-              Built Exclusively for Styles Trucking Drivers
+              Ready to Drive With Styles Trucking?
             </h2>
             <p className="text-[hsl(var(--secondary))] text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
-              Stay updated with real-time load tracking, manage deliveries,
-              navigate routes with maps, check your paycheck, and update your
-              profile. Fast, reliable, synced across all devices, and 100%
-              secure.
+              Apply in two minutes and take the next step toward steady reefer miles, quality equipment, and predictable home time.
             </p>
 
             <Link
-              href="#"
+              href="/apply"
               className="inline-flex items-center gap-3 bg-[hsl(var(--secondary))] text-[hsl(var(--primary))] font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-xl"
             >
-              Download Driver App
+              Apply Now
               <ArrowRight size={20} />
             </Link>
           </div>
@@ -51,22 +48,22 @@ const Footer = () => {
               <h3 className="text-xl">Styles Trucking</h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Your trusted partner in transportation and logistics.
+              An 8-truck reefer fleet built around professional CDL-A drivers.
             </p>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold text-lg mb-6">Services</h4>
+            <h4 className="font-semibold text-lg mb-6">For Drivers</h4>
             <ul className="space-y-4 text-gray-400">
               {[
-                "Long Haul",
-                "Route Optimization",
-                "Time-Critical",
-                "Full Truckload",
+                "Pay & Miles",
+                "Equipment",
+                "Home Time",
+                "Driver App",
               ].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href={item === "Driver App" ? "#driverApp" : "#career-details"} className="hover:text-white transition-colors">
                     {item}
                   </Link>
                 </li>

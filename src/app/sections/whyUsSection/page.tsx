@@ -1,59 +1,21 @@
-'use client'
-import { about, AboutImages } from "@/components/data/db";
-import SubTitle from "@/components/ui/SubTitle";
-import Titles from "@/components/ui/Titles";
+"use client";
+import { Check, Truck } from "lucide-react";
 import Image from "next/image";
-// Importing Language Provider
-import { useTheme } from "@/context/theme/ThemeProvider";
 
 const WhyUsSection = () => {
-    const { theme } = useTheme();
-
   return (
-    <section className={`${theme === 'dark' ? 'bg-[#121d3e]' : 'bg-[#F8FAFC]'} py-10`} id="about">
+    <section className="bg-[#f7f9fc] py-14 md:py-20" id="about">
       <div className="container mx-auto px-5 gap-5">
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* Images */}
-          <div className="grid grid-cols-2 gap-2 md:gap-5">
-            {AboutImages.map((img, i) => (
-              <Image
-                key={i}
-                src={img.src}
-                alt={img.alt}
-                width={750}
-                height={750}
-                loading="lazy"
-                className={`${i === 1 || i === 3 ? "mt-3 md:mt-5" : "mt-0"}`}
-              />
-            ))}
+        <div className="grid items-center gap-8 rounded-xl bg-white p-5 shadow-sm md:grid-cols-2 md:p-8">
+          <div className="grid grid-cols-2 gap-3">
+            {["1.jpg", "2.jpg", "3.jpg", "5.jpg"].map((image, index) => <Image key={image} src={`/assets/images/${image}`} width={500} height={360} alt={`Styles Trucking fleet ${index + 1}`} className={`h-36 w-full object-cover md:h-44 ${index % 2 ? "mt-5" : ""}`} />)}
           </div>
-
-          {/* Texts */}
-          <div className="flex flex-col">
-            <Titles align="text-left">Why Choose Styles Trucking?</Titles>
-            <SubTitle align="text-left">
-              With over two decades of experience in the transportation and
-              logistics industry, Styles Trucking has built a reputation for
-              reliability, safety, and customer satisfaction. Our commitment to
-              excellence drives everything we do.
-            </SubTitle>
-
-            {/* icons */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {about.map((icon, i) => {
-                const Icon = icon.icons;
-                return (
-                  <div key={i} className="flex items-start gap-5">
-                    <span className="bg-[hsl(var(--primary))] text-[hsl(var(--secondary))] rounded-xl p-3">
-                      <Icon size={20} />
-                    </span>
-                    <div className="flex flex-col gap-1">
-                      <p>{icon.name}</p>
-                      <p className="text-[hsl(var(--text))] text-sm">{icon.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-md bg-[hsl(var(--primary))] px-4 py-2 text-sm font-semibold text-white"><Truck size={17} /> Your Truck. Your Miles. Your Future.</div>
+            <h2 className="mt-5 text-3xl font-bold text-slate-900">Why Choose Styles Trucking?</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-500">We are an 10-truck reefer fleet based in Northwest Arkansas. Our drivers get quality equipment, consistent freight, and direct support without feeling like a number.</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {["10-truck reefer fleet", "2022+ Freightliners", "53' reefer trailers", "Health, dental, vision & 401(k)"].map((item) => <div key={item} className="flex items-center gap-2 text-sm font-medium text-slate-700"><span className="rounded-full bg-[hsl(var(--primary))] p-1 text-white"><Check size={12} /></span>{item}</div>)}
             </div>
           </div>
         </div>
