@@ -88,14 +88,20 @@ const Header = ({ cdlDriverJobs = false }: { cdlDriverJobs?: boolean }) => {
     },
     {
       id: 3,
-      name: "Apply",
-      href: "/apply",
-    },
-    {
-      id: 4,
       name: "Owner Operator",
       href: "/owneroperator",
     },
+    {
+      id: 4,
+      name: "Careers",
+      href: "/careers",
+    },
+    {
+      id: 3,
+      name: "Driver App",
+      href: "/driverApp",
+    },
+
   ];
 
   return (
@@ -198,7 +204,7 @@ const Header = ({ cdlDriverJobs = false }: { cdlDriverJobs?: boolean }) => {
               href="/apply"
               className="rounded-lg bg-[hsl(var(--primary))] px-3 py-2.5 text-sm font-sm text-[hsl(var(--secondary))] shadow-lg"
             >
-              Apply 
+              Apply
             </Link>
           ) : (
             <motion.button onClick={() => setOpenMenu(!openMenu)}>

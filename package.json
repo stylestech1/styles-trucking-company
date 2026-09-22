@@ -21,7 +21,6 @@
     "swiper": "^14.2.0"
   },
   "devDependencies": {
-    "@next/swc-win32-x64-msvc": "^16.3.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
