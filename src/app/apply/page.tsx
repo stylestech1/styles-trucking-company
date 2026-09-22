@@ -19,8 +19,6 @@ type ErrorState = Partial<Record<keyof FormState, string>>;
 
 const digitsOnly = (value: string) => value.replace(/\D/g, "");
 
-const BASE_URL = "https://styles-dispatch-management-prod.onrender.com";
-
 export default function ApplyPage() {
     const [activeStep, setActiveStep] = useState(1);
     const [errors, setErrors] = useState<ErrorState>({});
@@ -172,34 +170,15 @@ export default function ApplyPage() {
                 readyDate: form.readyDate,
             };
 
-            const response = await fetch(
-                `${BASE_URL}/api/v1/driver-applicants/public`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify(payload),
-                }
-            );
+            console.info("Application payload ready", payload);
+            // const response = await fetch("/api/v1/driver-applicants/public", {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify(payload),
+            // });
+            // if (!response.ok) throw new Error("Failed to submit application");
 
-            const text = await response.text();
-
-            let result: any = {};
-            try {
-                result = text ? JSON.parse(text) : {};
-            } catch {
-                throw new Error(
-                    "This API route is returning an HTML page, not JSON. Please check that /api/v1/driver-applicants/public exists on www.stylestrucking.com."
-                );
-            }
-
-            if (!response.ok) {
-                throw new Error(result?.message || "Failed to submit application");
-            }
-
-            setToast({ type: "success", message: "Application submitted successfully" });
+            setToast({ type: "success", message: "Application is ready to be submitted" });
 
             setForm({
                 firstName: "",

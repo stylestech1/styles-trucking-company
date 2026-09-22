@@ -1,7 +1,6 @@
 'use client'
 import { ArrowLeft, Shield } from "lucide-react";
 import Link from "next/link";
-// Importing Language Provider
 import { useTheme } from "@/context/theme/ThemeProvider";
 
 const PrivacyPolicy = () => {
