@@ -94,12 +94,12 @@ const Header = ({ cdlDriverJobs = false }: { cdlDriverJobs?: boolean }) => {
     {
       id: 4,
       name: "Careers",
-      href: "/careers",
+      href: "#careers",
     },
     {
-      id: 3,
+      id: 5,
       name: "Driver App",
-      href: "/driverApp",
+      href: "#driverApp",
     },
 
   ];
