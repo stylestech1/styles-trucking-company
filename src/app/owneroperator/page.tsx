@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 import { ArrowRight, CalendarDays, CheckCircle2, FileText, Handshake, Headphones, Snowflake, SlidersHorizontal, Truck } from "lucide-react";
 import Link from "next/link";
 
-const ownerOperatorEndpoint = "https://styles-dispatch-management-dev.onrender.com/api/v1/owner-operators";
 
 type OwnerOperatorForm = {
     firstName: string;
@@ -59,12 +58,18 @@ export default function OwnerOperatorPage() {
         setSubmitMessage(null);
     };
 
+    const ownerOperatorEndpoint = process.env.NEXT_PUBLIC_API_URL;
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsSubmitting(true);
         setSubmitMessage(null);
 
         try {
+            if (!ownerOperatorEndpoint) {
+                throw new Error("Application submission is currently unavailable. Please try again later.");
+            }
+
             const response = await fetch(ownerOperatorEndpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
