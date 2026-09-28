@@ -58,7 +58,7 @@ export default function OwnerOperatorPage() {
         setSubmitMessage(null);
     };
 
-    const ownerOperatorEndpoint = "https://styles-dispatch-management-prod.onrender.com";
+    const ownerOperatorEndpoint = "https://styles-dispatch-management-prod.onrender.com/api/v1/owner-operators";
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -66,9 +66,6 @@ export default function OwnerOperatorPage() {
         setSubmitMessage(null);
 
         try {
-            // if (!ownerOperatorEndpoint) {
-            //     throw new Error("Application submission is currently unavailable. Please try again later.");
-            // }
 
             const response = await fetch(ownerOperatorEndpoint, {
                 method: "POST",
