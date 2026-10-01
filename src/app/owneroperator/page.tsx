@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { ArrowRight, CalendarDays, CheckCircle2, FileText, Handshake, Headphones, Snowflake, SlidersHorizontal, Truck } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArrowRight, CalendarDays, CheckCircle2, FileText, Handshake, Headphones, House, Snowflake, SlidersHorizontal, Truck } from "lucide-react";
 import Link from "next/link";
+import Stepper, { Step } from "@/components/Stepper";
 
 
 type OwnerOperatorForm = {
@@ -50,6 +51,7 @@ const supportItems = [
 
 export default function OwnerOperatorPage() {
     const [form, setForm] = useState<OwnerOperatorForm>(initialForm);
+    const [activeStep, setActiveStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -60,8 +62,34 @@ export default function OwnerOperatorPage() {
 
     const ownerOperatorEndpoint = "https://styles-dispatch-management-prod.onrender.com/api/v1/owner-operators";
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
+    const canProceed = useMemo(() => {
+        if (isSubmitting) return false;
+
+        if (activeStep === 1) {
+            return Boolean(
+                form.firstName.trim() &&
+                form.lastName.trim() &&
+                form.phone.trim() &&
+                form.email.trim() &&
+                isValidEmail(form.email) &&
+                form.currentLocation.trim()
+            );
+        }
+
+        return Boolean(
+            form.cdlExperienceYears.trim() &&
+            form.truckYear.trim() &&
+            form.truckMake.trim() &&
+            form.truckModel.trim() &&
+            form.preferredOperatingArea.trim()
+        );
+    }, [activeStep, form, isSubmitting]);
+
+    const onBeforeNext = async (step: number) => {
+        if (step === 1) return canProceed;
+
         setIsSubmitting(true);
         setSubmitMessage(null);
 
@@ -81,8 +109,10 @@ export default function OwnerOperatorPage() {
 
             setForm(initialForm);
             setSubmitMessage({ type: "success", text: "Application submitted successfully. Our team will contact you soon." });
+            return true;
         } catch (error) {
             setSubmitMessage({ type: "error", text: error instanceof Error ? error.message : "Something went wrong. Please try again." });
+            return false;
         } finally {
             setIsSubmitting(false);
         }
@@ -144,37 +174,69 @@ export default function OwnerOperatorPage() {
 
             <section id="support" className="bg-[#f7f9fc] px-6 py-20 md:px-10 lg:px-16"><div className="mx-auto max-w-7xl text-center"><p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#2160a8]">Freight &amp; Support</p><h2 className="mt-3 text-4xl font-extrabold text-[#14579d]">We help keep your truck moving</h2><p className="mt-4 text-lg text-[#345a80]">Regional, OTR, dedicated, contract, brokered and direct customer freight as available.</p><div className="mt-11 grid gap-5 text-left md:grid-cols-3">{supportItems.map(({ title, description, icon: Icon }) => <article key={title} className="min-h-[230px] rounded-2xl border border-[#dbe5ef] bg-white p-7 shadow-sm"><Icon className="text-[#2160a8]" size={30} /><h3 className="mt-5 text-xl font-extrabold text-[#2160a8]">{title}</h3><p className="mt-3 leading-7 text-[#345a80]">{description}</p></article>)}</div></div></section>
 
-            <section id="apply" className="bg-[#2861a5] px-6 py-16 text-white md:px-10">
-                <div className="mx-auto max-w-4xl">
-                    <div className="text-center">
-                        <h2 className="text-3xl font-extrabold md:text-5xl">Ready to drive with Styles Trucking?</h2>
-                        <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-blue-100">Complete the initial information below. A qualified applicant will receive full lease-on requirements and compensation details.</p>
+            <section id="apply" className="bg-[#f5f6f8] px-4 py-16 text-slate-900 md:px-10">
+                <div className="mx-auto w-full max-w-[760px]">
+                    <div className="mb-5 rounded-xl bg-[#edf5ff] p-6 text-center">
+                        <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">Styles Trucking Recruiting</p>
+                        <h2 className="mt-2 text-3xl font-bold text-slate-900">Ready to drive with Styles Trucking?</h2>
+                        <p className="mt-2 text-sm text-slate-600">Complete the initial information below. A qualified applicant will receive full lease-on requirements and compensation details.</p>
                     </div>
-                    <form onSubmit={handleSubmit} className="mt-10 grid gap-x-5 gap-y-5 rounded-[30px] bg-white p-6 text-[#183b63] shadow-2xl sm:grid-cols-2 sm:p-10">
-                        {([
-                            ["firstName", "First name", "First name", "text"],
-                            ["lastName", "Last name", "Last name", "text"],
-                            ["phone", "Phone number", "+1 555 123 4567", "tel"],
-                            ["email", "Email address", "Email address", "email"],
-                            ["currentLocation", "Current location", "Dallas, TX", "text"],
-                            ["cdlExperienceYears", "Years of CDL experience", "8", "number"],
-                            ["truckYear", "Truck year", "2022", "number"],
-                            ["truckMake", "Truck make", "Freightliner", "text"],
-                            ["truckModel", "Truck model", "Cascadia", "text"],
-                            ["preferredOperatingArea", "Preferred operating area", "Texas and surrounding states", "text"],
-                        ] as const).map(([field, label, placeholder, type]) => (
-                            <label key={field} className="block text-sm font-extrabold">
-                                {label}
-                                <input required type={type} value={form[field]} onChange={(event) => updateField(field, event.target.value)} placeholder={placeholder} className="mt-2 h-12 w-full rounded-xl border border-[#c8d7e6] px-4 text-base font-normal outline-none transition-colors placeholder:text-[#91a4b8] focus:border-[#2861a5] focus:ring-2 focus:ring-[#2861a5]/15" />
-                            </label>
-                        ))}
-                        <div className="sm:col-span-2">
-                            <button type="submit" disabled={isSubmitting} className="inline-flex items-center gap-2 rounded-xl bg-[#2861a5] px-7 py-4 font-extrabold text-white transition-colors hover:bg-[#1d508d] disabled:cursor-not-allowed disabled:opacity-60">
-                                {isSubmitting ? "Submitting..." : "Submit Application"} {!isSubmitting && <ArrowRight size={18} />}
-                            </button>
-                            {submitMessage && <p role="status" className={`mt-4 text-sm font-semibold ${submitMessage.type === "success" ? "text-green-600" : "text-red-600"}`}>{submitMessage.text}</p>}
+                    {submitMessage?.type === "success" ? (
+                        <div className="rounded-xl bg-white p-8 text-center shadow-sm sm:p-10" role="status">
+                            <CheckCircle2 className="mx-auto text-emerald-600" size={48} />
+                            <h3 className="mt-4 text-2xl font-bold text-slate-900">Application submitted</h3>
+                            <p className="mt-2 text-sm text-slate-600">{submitMessage.text}</p>
+                            <Link href="/" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#205DAC] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194b8d]">
+                                <House size={18} />
+                                Go to Home
+                            </Link>
                         </div>
-                    </form>
+                    ) : (
+                        <Stepper
+                            onStepChange={setActiveStep}
+                            onBeforeNext={onBeforeNext}
+                            onFinalStepCompleted={() => { }}
+                            backButtonText="Previous"
+                            nextButtonText={activeStep === 2 ? (isSubmitting ? "Submitting..." : "Submit Application") : "Next"}
+                            nextButtonProps={{ disabled: !canProceed }}
+                        >
+                            <Step>
+                                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm sm:space-y-5 sm:p-8">
+                                    <h3 className="text-lg font-semibold text-slate-900">Contact information</h3>
+                                    {([
+                                        ["firstName", "First name", "First name", "text"],
+                                        ["lastName", "Last name", "Last name", "text"],
+                                        ["phone", "Phone number", "+1 555 123 4567", "tel"],
+                                        ["email", "Email address", "Email address", "email"],
+                                        ["currentLocation", "Current location", "Dallas, TX", "text"],
+                                    ] as const).map(([field, label, placeholder, type]) => (
+                                        <label key={field} className="block text-sm font-semibold text-slate-800">
+                                            {label}
+                                            <input required type={type} value={form[field]} onChange={(event) => updateField(field, event.target.value)} placeholder={placeholder} className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-normal outline-none transition focus:border-[#205DAC]" />
+                                        </label>
+                                    ))}
+                                </div>
+                            </Step>
+                            <Step>
+                                <div className="space-y-4 rounded-xl bg-white p-6 shadow-sm sm:space-y-5 sm:p-8">
+                                    <h3 className="text-lg font-semibold text-slate-900">Experience and truck details</h3>
+                                    {([
+                                        ["cdlExperienceYears", "Years of CDL experience", "8", "number"],
+                                        ["truckYear", "Truck year", "2022", "number"],
+                                        ["truckMake", "Truck make", "Freightliner", "text"],
+                                        ["truckModel", "Truck model", "Cascadia", "text"],
+                                        ["preferredOperatingArea", "Preferred operating area", "Texas and surrounding states", "text"],
+                                    ] as const).map(([field, label, placeholder, type]) => (
+                                        <label key={field} className="block text-sm font-semibold text-slate-800">
+                                            {label}
+                                            <input required type={type} value={form[field]} onChange={(event) => updateField(field, event.target.value)} placeholder={placeholder} className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-normal outline-none transition focus:border-[#205DAC]" />
+                                        </label>
+                                    ))}
+                                    {submitMessage?.type === "error" && <p role="alert" className="text-sm font-semibold text-red-600">{submitMessage.text}</p>}
+                                </div>
+                            </Step>
+                        </Stepper>
+                    )}
                 </div>
             </section>
         </main>
