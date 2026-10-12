@@ -1,62 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
-"use client";
+import Image from "next/image";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+const testimonialImages = [
+    "1.jpg",
+    "2.jpg",
+    "3.jpg",
+    "4.jpg",
+    "5.jpg",
+    "6.jpg",
+    "7.jpg",
+    "8.jpg",
+];
 
 export default function Testination() {
-    const items = [
-        {
-            type: "video" as const,
-            src: "/assets/images/v1.mp4",
-        },
-        {
-            type: "video" as const,
-            src: "/assets/images/v2.MP4",
-        },
-        {
-            type: "video" as const,
-            src: "/assets/images/v3.MP4",
-        },
-
-        {
-            type: "image" as const,
-            src: "/assets/images/1.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/2.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/3.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/4.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/5.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/6.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/7.jpg",
-        },
-        {
-            type: "image" as const,
-            src: "/assets/images/8.jpg",
-        },
-    ];
-
     return (
         <section className="py-14 md:py-20">
             <div className="container mx-auto px-5">
@@ -64,52 +19,40 @@ export default function Testination() {
                     Testimonials
                 </h2>
 
-                <Swiper
-                    modules={[Autoplay, Navigation, Pagination]}
-                    spaceBetween={20}
-                    slidesPerView={1}
-                    loop
-                    speed={800}
-                    autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                        pauseOnMouseEnter: false,
-                    }}
-                    navigation
-                    pagination={{
-                        clickable: true,
-                    }}
-                    breakpoints={{
-                        640: {
-                            slidesPerView: 2,
-                        },
-                        1024: {
-                            slidesPerView: 3,
-                        },
-                    }}
-                    className="pb-12"
-                >
-                    {items.map((item, index) => (
-                        <SwiperSlide key={index}>
-                            <div className="overflow-hidden rounded-xl">
-                                {item.type === "video" ? (
-                                    <video
-                                        src={item.src}
-                                        controls
-                                        preload="metadata"
-                                        className="h-[300px] w-full object-cover"
-                                    />
-                                ) : (
-                                    <img
-                                        src={item.src}
-                                        alt={`Testimonial ${index + 1}`}
-                                        className="h-[300px] w-full object-cover"
-                                    />
-                                )}
+                <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+                    <div className="order-2 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:order-1">
+                        {testimonialImages.map((image, index) => (
+                            <div
+                                key={image}
+                                className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-sm"
+                            >
+                                <Image
+                                    src={`/assets/images/${image}`}
+                                    alt={`Testimonial ${index + 1}`}
+                                    fill
+                                    sizes="(min-width: 1024px) 18vw, (min-width: 768px) 22vw, 45vw"
+                                    className="object-cover"
+                                />
                             </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                        ))}
+                    </div>
+
+                    <div className="order-1 overflow-hidden rounded-xl bg-black shadow-lg lg:order-2">
+                        <video
+                            className="aspect-video w-full"
+                            controls
+                            playsInline
+                            preload="metadata"
+                            aria-label="Styles Trucking testimonial video"
+                        >
+                            <source
+                                src="/assets/videos/Avatar%20Video_1080p.mp4"
+                                type="video/mp4"
+                            />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
             </div>
         </section>
     );

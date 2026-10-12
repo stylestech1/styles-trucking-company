@@ -73,25 +73,43 @@ const ServiceSection = () => {
           support they need to build a rewarding career.
         </p>
 
-        <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
-          {features.map(({ icon: Icon, title, description }) => (
-            <div
-              key={title}
-              className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm md:p-5"
+        <div className="mx-auto mt-10 grid max-w-7xl gap-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+          <div className="order-2 grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-3 lg:order-1">
+            {features.map(({ icon: Icon, title, description }) => (
+              <div
+                key={title}
+                className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm"
+              >
+                <span className="mb-3 inline-flex rounded-md bg-[hsl(var(--primary))] p-2 text-white">
+                  <Icon size={17} />
+                </span>
+
+                <h3 className="text-sm font-semibold text-slate-900 md:text-base">
+                  {title}
+                </h3>
+
+                <p className="mt-1 text-xs text-slate-500">
+                  {description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="order-1 overflow-hidden rounded-xl bg-black shadow-lg lg:order-2">
+            <video
+              className="aspect-video w-full lg:h-[480px] lg:aspect-auto"
+              controls
+              playsInline
+              preload="metadata"
+              aria-label="Styles Trucking driver video"
             >
-              <span className="mb-3 inline-flex rounded-md bg-[hsl(var(--primary))] p-2 text-white">
-                <Icon size={17} />
-              </span>
-
-              <h3 className="text-sm font-semibold text-slate-900 md:text-base">
-                {title}
-              </h3>
-
-              <p className="mt-1 text-xs text-slate-500">
-                {description}
-              </p>
-            </div>
-          ))}
+              <source
+                src="/assets/videos/Avatar%20Video_1080p.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
 
         <div
