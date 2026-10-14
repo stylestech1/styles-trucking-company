@@ -18,11 +18,19 @@ const CareerSection = () => {
         <Image src="/assets/images/4.jpg" width={700} height={480} alt="Styles Trucking driver" className="h-full min-h-64 w-full object-cover" />
       </div>
       <div className="mt-10 grid gap-5 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-200 p-5"><ShieldCheck className="text-[hsl(var(--primary))]" size={22} /><h3 className="mt-3 font-semibold">What We&apos;re Looking For</h3><p className="mt-2 text-sm text-slate-500">Valid CDL-A, clean driving record, minimum two years of experience, and a professional safety mindset.</p></div>
-        <div className="rounded-lg border border-slate-200 p-5"><MapPin className="text-[hsl(var(--primary))]" size={22} /><h3 className="mt-3 font-semibold">Our Lanes</h3><p className="mt-2 text-sm text-slate-500">AR, OK, MO, KS, IL, OH, PA, MD, VA, NC, SC, GA, TN, MS, KY, AL, LA, and TX. No NY or CA.</p></div>
+        <div className="rounded-lg border border-slate-200 p-5">
+          <ShieldCheck className="text-[hsl(var(--primary))]" size={22} /><h3 className="mt-3 font-semibold">What We&apos;re Looking For</h3><p className="mt-2 text-sm text-slate-500">Valid CDL-A, clean driving record, minimum two years of experience, and a professional safety mindset.</p></div>
+        <div className="rounded-lg border border-slate-200 p-5">
+          <MapPin className="text-[hsl(var(--primary))]" size={22} />
+          <h3 className="mt-3 font-semibold">Our Lanes</h3>
+          <p className="mt-2 text-sm text-slate-500">AR, OK, MO, KS, IL, OH, PA, MD, VA, NC, SC, GA, TN, MS, KY, AL, LA, and TX. No NY or CA.</p>
+          </div>
         <div className="rounded-lg border border-slate-200 p-5"><Check className="text-[hsl(var(--primary))]" size={22} /><h3 className="mt-3 font-semibold">Home Time</h3><p className="mt-2 text-sm text-slate-500">Choose from three weeks out with four days home or four weeks out with one week home.</p></div>
       </div>
-      <div className="mt-8 text-center"><Link href="/apply" className="inline-flex items-center gap-2 rounded-md bg-[hsl(var(--primary))] px-7 py-3 font-semibold text-white shadow-md hover:opacity-90">Apply Now <ArrowRight size={18} /></Link></div>
+      <div className="mt-8 text-center">
+        <Link href="/apply" className="inline-flex items-center gap-2 rounded-md bg-[hsl(var(--primary))] px-7 py-3 font-semibold text-white shadow-md hover:opacity-90">Apply Now <ArrowRight size={18} />
+        </Link>
+      </div>
     </section>
   );
 };

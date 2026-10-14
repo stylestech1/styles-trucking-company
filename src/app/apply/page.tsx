@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Stepper, { Step } from "@/components/Stepper";
 
 type FormState = {
@@ -17,108 +17,136 @@ type FormState = {
 
 type ErrorState = Partial<Record<keyof FormState, string>>;
 
-const digitsOnly = (value: string) => value.replace(/\D/g, "");
+type ToastState = {
+    type: "success" | "error";
+    message: string;
+};
+
+const API_URL =
+    "https://styles-dispatch-management-prod.onrender.com/api/v1/driver-applicants/public";
+
+const initialForm: FormState = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    state: "",
+    experienceYears: "",
+    violations: "",
+    readyDate: "",
+};
+
+const digitsOnly = (value: string) =>
+    value.replace(/\D/g, "");
+
+const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
 export default function ApplyPage() {
     const [activeStep, setActiveStep] = useState(1);
-    const [errors, setErrors] = useState<ErrorState>({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
     const [form, setForm] = useState<FormState>({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        email: "",
-        state: "",
-        experienceYears: "",
-        violations: "",
-        readyDate: "",
+        ...initialForm,
     });
 
-    const isValidEmail = (email: string) =>
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    const [errors, setErrors] = useState<ErrorState>({});
 
-    const setField = (key: keyof FormState, value: string) => {
-        if (key === "phone") value = digitsOnly(value);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-        setForm((prev) => ({ ...prev, [key]: value }));
+    const [toast, setToast] = useState<ToastState | null>(
+        null
+    );
 
-        setErrors((prev) => {
-            const next = { ...prev };
+    const submittingRef = useRef(false);
 
-            if (key === "firstName") {
-                next.firstName = value.trim() ? "" : "First name is required";
-            }
+    // Automatically hide toast
+    useEffect(() => {
+        if (!toast) return;
 
-            if (key === "lastName") {
-                next.lastName = value.trim() ? "" : "Last name is required";
-            }
+        const timeout = setTimeout(() => {
+            setToast(null);
+        }, 4000);
 
-            if (key === "phone") {
-                next.phone = !value.trim()
-                    ? "Phone number is required"
-                    : value.length < 7
-                        ? "Phone number must be at least 7 digits"
-                        : "";
-            }
+        return () => clearTimeout(timeout);
+    }, [toast]);
 
-            if (key === "email") {
-                next.email = !value.trim()
-                    ? "Email is required"
-                    : !isValidEmail(value)
-                        ? "Please enter a valid email address"
-                        : "";
-            }
+    // Update form fields
+    const setField = (
+        key: keyof FormState,
+        value: string
+    ) => {
+        const nextValue =
+            key === "phone" ? digitsOnly(value) : value;
 
-            if (key === "state") {
-                next.state = value.trim() ? "" : "State is required";
-            }
+        setForm((prev) => ({
+            ...prev,
+            [key]: nextValue,
+        }));
 
-            return next;
-        });
+        setErrors((prev) => ({
+            ...prev,
+            [key]: undefined,
+        }));
     };
 
-    const validateStep = (step: number) => {
+    // Validate each step
+    const validateStep = (step: number): boolean => {
         const nextErrors: ErrorState = {};
 
         if (step === 1) {
-            if (!form.firstName.trim()) nextErrors.firstName = "First name is required";
-            if (!form.lastName.trim()) nextErrors.lastName = "Last name is required";
+            if (!form.firstName.trim()) {
+                nextErrors.firstName =
+                    "First name is required";
+            }
+
+            if (!form.lastName.trim()) {
+                nextErrors.lastName =
+                    "Last name is required";
+            }
 
             if (!form.phone.trim()) {
-                nextErrors.phone = "Phone number is required";
+                nextErrors.phone =
+                    "Phone number is required";
             } else if (digitsOnly(form.phone).length < 7) {
-                nextErrors.phone = "Phone number is invalid";
+                nextErrors.phone =
+                    "Phone number must be at least 7 digits";
             }
 
             if (!form.email.trim()) {
                 nextErrors.email = "Email is required";
             } else if (!isValidEmail(form.email)) {
-                nextErrors.email = "Please enter a valid email address";
+                nextErrors.email =
+                    "Please enter a valid email address";
             }
 
-            if (!form.state.trim()) nextErrors.state = "State is required";
+            if (!form.state.trim()) {
+                nextErrors.state = "State is required";
+            }
         }
 
         if (step === 2) {
             if (!form.experienceYears.trim()) {
-                nextErrors.experienceYears = "Experience is required";
+                nextErrors.experienceYears =
+                    "Experience is required";
             }
 
             if (!form.violations.trim()) {
-                nextErrors.violations = "This field is required";
+                nextErrors.violations =
+                    "This field is required";
             }
 
             if (!form.readyDate.trim()) {
-                nextErrors.readyDate = "Ready start date is required";
+                nextErrors.readyDate =
+                    "Ready start date is required";
             }
         }
 
         setErrors(nextErrors);
+
         return Object.keys(nextErrors).length === 0;
     };
 
+    // Enable or disable Next / Submit
     const canProceed = useMemo(() => {
         if (isSubmitting) return false;
 
@@ -126,9 +154,7 @@ export default function ApplyPage() {
             return Boolean(
                 form.firstName.trim() &&
                 form.lastName.trim() &&
-                form.phone.trim() &&
                 digitsOnly(form.phone).length >= 7 &&
-                form.email.trim() &&
                 isValidEmail(form.email) &&
                 form.state.trim()
             );
@@ -145,18 +171,24 @@ export default function ApplyPage() {
         return false;
     }, [activeStep, form, isSubmitting]);
 
-    useEffect(() => {
-        if (!toast) return;
+    // Submit application
 
-        const timeout = setTimeout(() => setToast(null), 3500);
-        return () => clearTimeout(timeout);
-    }, [toast]);
+    const handleSubmit = async (): Promise<boolean> => {
+        if (submittingRef.current) {
+            console.warn("Submission already in progress");
+            return false;
+        }
 
-    const handleSubmit = async () => {
         const isValid = validateStep(2);
-        if (!isValid) return false;
 
+        if (!isValid) {
+            console.warn("Form validation failed");
+            return false;
+        }
+
+        submittingRef.current = true;
         setIsSubmitting(true);
+        setToast(null);
 
         try {
             const payload = {
@@ -170,15 +202,44 @@ export default function ApplyPage() {
                 readyDate: form.readyDate,
             };
 
-            console.info("Application payload ready", payload);
-            // const response = await fetch("/api/v1/driver-applicants/public", {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify(payload),
-            // });
-            // if (!response.ok) throw new Error("Failed to submit application");
+       
 
-            setToast({ type: "success", message: "Application is ready to be submitted" });
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+
+            const responseText = await response.text();
+
+
+            let responseData: {
+                message?: string;
+                error?: string;
+            } | null = null;
+
+            try {
+                responseData = JSON.parse(responseText);
+            } catch {
+                console.warn("Response is not valid JSON");
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    responseData?.message ||
+                    responseData?.error ||
+                    `Failed to submit application (${response.status})`
+                );
+            }
+
+
+            setToast({
+                type: "success",
+                message: "Application submitted successfully!",
+            });
 
             setForm({
                 firstName: "",
@@ -194,36 +255,75 @@ export default function ApplyPage() {
             setErrors({});
             setActiveStep(1);
 
-            return false;
-        } catch (error: any) {
-            console.error(error);
-            setToast({ type: "error", message: error?.message || "Failed to submit application" });
+            return true;
+        } catch (error: unknown) {
+            console.error("5. FETCH ERROR:", error);
+
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : "Failed to submit application";
+
+            setToast({
+                type: "error",
+                message: errorMessage,
+            });
+
             return false;
         } finally {
+            submittingRef.current = false;
             setIsSubmitting(false);
+
         }
     };
 
-    const onBeforeNext = async (step: number) => {
-        if (step === 1) return validateStep(1);
-        if (step === 2) return handleSubmit();
-        return true;
+
+    // Stepper navigation
+    const onBeforeNext = async (
+        step: number
+    ): Promise<boolean> => {
+
+        if (step === 1) {
+            return validateStep(1);
+        }
+
+        if (step === 2) {
+            return await handleSubmit();
+        }
+
+        return false;
     };
 
     return (
         <main className="min-h-screen bg-[#f5f6f8] pt-[110px] pb-10 px-4">
             <section className="mx-auto w-full max-w-[760px]">
+                {/* Header */}
                 <div className="mb-5 rounded-xl bg-[#edf5ff] p-6 text-center">
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">Styles Trucking Recruiting</p>
-                    <h1 className="mt-2 text-3xl font-bold text-slate-900">Apply to Drive With Styles</h1>
-                    <p className="mt-2 text-sm text-slate-600">Start with a short application. Our recruiting team will contact you about available CDL-A reefer positions.</p>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--primary))]">
+                        Styles Trucking Recruiting
+                    </p>
+
+                    <h1 className="mt-2 text-3xl font-bold text-slate-900">
+                        Apply to Drive With Styles
+                    </h1>
+
+                    <p className="mt-2 text-sm text-slate-600">
+                        Start with a short application. Our
+                        recruiting team will contact you about
+                        available CDL-A reefer positions.
+                    </p>
                 </div>
+
+                {/* Application Form */}
                 <div className="p-4">
                     <Stepper
                         initialStep={activeStep}
-                        onStepChange={(step) => setActiveStep(step)}
+                        onStepChange={(step) => {
+                            setActiveStep(step);
+                        }}
                         onBeforeNext={onBeforeNext}
                         onFinalStepCompleted={() => { }}
+                        disableStepIndicators
                         backButtonText="Previous"
                         nextButtonText={
                             activeStep === 2
@@ -234,8 +334,10 @@ export default function ApplyPage() {
                         }
                         nextButtonProps={{
                             disabled: !canProceed,
+                            type: "button",
                         }}
                     >
+                        {/* STEP 1 */}
                         <Step>
                             <div className="space-y-4 sm:space-y-5">
                                 <Field
@@ -243,7 +345,9 @@ export default function ApplyPage() {
                                     required
                                     placeholder="First name"
                                     value={form.firstName}
-                                    onChange={(value) => setField("firstName", value)}
+                                    onChange={(value) =>
+                                        setField("firstName", value)
+                                    }
                                     error={errors.firstName}
                                 />
 
@@ -252,7 +356,9 @@ export default function ApplyPage() {
                                     required
                                     placeholder="Last name"
                                     value={form.lastName}
-                                    onChange={(value) => setField("lastName", value)}
+                                    onChange={(value) =>
+                                        setField("lastName", value)
+                                    }
                                     error={errors.lastName}
                                 />
 
@@ -261,7 +367,9 @@ export default function ApplyPage() {
                                     required
                                     placeholder="Phone number"
                                     value={form.phone}
-                                    onChange={(value) => setField("phone", value)}
+                                    onChange={(value) =>
+                                        setField("phone", value)
+                                    }
                                     error={errors.phone}
                                     inputMode="numeric"
                                 />
@@ -271,21 +379,27 @@ export default function ApplyPage() {
                                     required
                                     placeholder="Email"
                                     value={form.email}
-                                    onChange={(value) => setField("email", value)}
+                                    onChange={(value) =>
+                                        setField("email", value)
+                                    }
                                     error={errors.email}
                                     type="email"
                                 />
+
                                 <Field
                                     label="State"
                                     required
                                     placeholder="State"
                                     value={form.state}
-                                    onChange={(value) => setField("state", value)}
+                                    onChange={(value) =>
+                                        setField("state", value)
+                                    }
                                     error={errors.state}
                                 />
                             </div>
                         </Step>
 
+                        {/* STEP 2 */}
                         <Step>
                             <div className="space-y-4 sm:space-y-5">
                                 <Field
@@ -293,7 +407,9 @@ export default function ApplyPage() {
                                     required
                                     placeholder="Example: 2 years"
                                     value={form.experienceYears}
-                                    onChange={(value) => setField("experienceYears", value)}
+                                    onChange={(value) =>
+                                        setField("experienceYears", value)
+                                    }
                                     error={errors.experienceYears}
                                 />
 
@@ -302,7 +418,9 @@ export default function ApplyPage() {
                                     required
                                     placeholder="yes/no..."
                                     value={form.violations}
-                                    onChange={(value) => setField("violations", value)}
+                                    onChange={(value) =>
+                                        setField("violations", value)
+                                    }
                                     error={errors.violations}
                                     maxLength={70}
                                 />
@@ -311,7 +429,9 @@ export default function ApplyPage() {
                                     label="When are you ready to start?"
                                     required
                                     value={form.readyDate}
-                                    onChange={(value) => setField("readyDate", value)}
+                                    onChange={(value) =>
+                                        setField("readyDate", value)
+                                    }
                                     error={errors.readyDate}
                                     type="date"
                                 />
@@ -321,19 +441,43 @@ export default function ApplyPage() {
                 </div>
             </section>
 
-            {toast ? (
-                <div className="fixed top-5 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 rounded-2xl border px-4 py-3 shadow-xl transition-opacity duration-300 sm:px-5"
-                    style={{ backgroundColor: toast.type === "success" ? "#ecfdf5" : "#fef2f2", borderColor: toast.type === "success" ? "#10b981" : "#ef4444" }}>
-                    <p className={`text-sm font-semibold ${toast.type === "success" ? "text-emerald-700" : "text-red-700"}`}>
-                        {toast.type === "success" ? "Success" : "Error"}
+            {/* Toast Notification */}
+            {toast && (
+                <div
+                    role="alert"
+                    className="fixed top-5 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 rounded-2xl border px-4 py-3 shadow-xl sm:px-5"
+                    style={{
+                        backgroundColor:
+                            toast.type === "success"
+                                ? "#ecfdf5"
+                                : "#fef2f2",
+                        borderColor:
+                            toast.type === "success"
+                                ? "#10b981"
+                                : "#ef4444",
+                    }}
+                >
+                    <p
+                        className={`text-sm font-semibold ${toast.type === "success"
+                            ? "text-emerald-700"
+                            : "text-red-700"
+                            }`}
+                    >
+                        {toast.type === "success"
+                            ? "Success"
+                            : "Error"}
                     </p>
-                    <p className="mt-1 text-sm text-slate-700">{toast.message}</p>
+
+                    <p className="mt-1 text-sm text-slate-700">
+                        {toast.message}
+                    </p>
                 </div>
-            ) : null}
+            )}
         </main>
     );
 }
 
+// Reusable input field
 function Field({
     label,
     required,
@@ -356,7 +500,10 @@ function Field({
     return (
         <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-800">
-                {label} {required && <span className="text-red-500">*</span>}
+                {label}{" "}
+                {required && (
+                    <span className="text-red-500">*</span>
+                )}
             </label>
 
             <input
@@ -364,16 +511,25 @@ function Field({
                 inputMode={inputMode}
                 placeholder={placeholder}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
-                className={`w-full rounded-lg border bg-white px-4 py-3 text-sm outline-none transition focus:border-[#205DAC] ${error ? "border-red-400" : "border-slate-200"
+                onChange={(event) =>
+                    onChange(event.target.value)
+                }
+                className={`w-full rounded-lg border bg-white px-4 py-3 text-sm outline-none transition focus:border-[#205DAC] ${error
+                    ? "border-red-400"
+                    : "border-slate-200"
                     }`}
             />
 
-            {error && <p className="text-xs text-red-500">{error}</p>}
+            {error && (
+                <p className="text-xs text-red-500">
+                    {error}
+                </p>
+            )}
         </div>
     );
 }
 
+// Reusable textarea field
 function TextAreaField({
     label,
     required,
@@ -394,20 +550,29 @@ function TextAreaField({
     return (
         <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-800">
-                {label} {required && <span className="text-red-500">*</span>}
+                {label}{" "}
+                {required && (
+                    <span className="text-red-500">*</span>
+                )}
             </label>
 
             <textarea
                 placeholder={placeholder}
                 value={value}
                 maxLength={maxLength}
-                onChange={(e) => onChange(e.target.value)}
-                className={`min-h-[110px] w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm outline-none transition focus:border-[#205DAC] ${error ? "border-red-400" : "border-slate-200"
+                onChange={(event) =>
+                    onChange(event.target.value)
+                }
+                className={`min-h-[110px] w-full resize-none rounded-lg border bg-white px-4 py-3 text-sm outline-none transition focus:border-[#205DAC] ${error
+                    ? "border-red-400"
+                    : "border-slate-200"
                     }`}
             />
 
             <div className="mt-1 flex items-center justify-between">
-                <p className="min-h-[18px] text-xs text-red-500">{error || ""}</p>
+                <p className="min-h-[18px] text-xs text-red-500">
+                    {error || ""}
+                </p>
 
                 <p
                     className={`text-xs ${value.length >= maxLength

@@ -43,12 +43,14 @@ const HeroSection = () => {
                 Based in Northwest Arkansas • 2,800–3,200 miles per week
               </p>
 
-              <Link
+              {/* <Link
                 href="/apply"
                 className="inline-flex items-center gap-2 py-3 px-6 rounded-lg font-semibold bg-[hsl(var(--primary))] text-white shadow-lg transition-colors"
               >
                 APPLY IN 2 MINUTES
                 <ArrowRight size={18} />
+              </Link> */}
+              <Link href="/apply" className="inline-flex items-center gap-2 rounded-md bg-[hsl(var(--primary))] px-7 py-3 font-semibold text-white shadow-md hover:opacity-90">APPLY IN 2 MINUTES <ArrowRight size={18} />
               </Link>
 
               <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-3 w-full">

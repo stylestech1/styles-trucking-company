@@ -22,7 +22,6 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   onStepChange?: (step: number) => void;
   onFinalStepCompleted?: () => void;
 
-  // ✅ allow sync OR async guard (validation / submit)
   onBeforeNext?: (currentStep: number) => boolean | Promise<boolean>;
 
   stepCircleContainerClassName?: string;
@@ -100,9 +99,11 @@ export default function Stepper({
       if (!ok) return;
     }
 
-    setDirection(1);
-    updateStep(totalSteps + 1);
+    // Completion is handled by the parent after successful submission
   };
+  useEffect(() => {
+    setCurrentStep(initialStep);
+  }, [initialStep]);
 
   return (
     <div className="rb-outer" {...rest}>
